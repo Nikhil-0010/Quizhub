@@ -6,7 +6,7 @@ const Regtype = () => {
     const [regType, setRegType] = useState("Organization");
     const handleChange = (e) => {
         setRegType(e.target.value)
-        console.log(regType);
+        // console.log(regType);
     }
     return (
         <>

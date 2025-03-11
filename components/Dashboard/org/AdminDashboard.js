@@ -18,7 +18,7 @@ const AdminDashboard = ({ resetDash }) => {
     const [user, setUser] = useState();
     const [org, setOrg] = useState();
     const [isOpen, setIsOpen] = useState(false);
-    console.log(resetDash)
+    // console.log(resetDash)
 
     useEffect(() => {
         if (!session?.user?.email) return;
@@ -31,7 +31,7 @@ const AdminDashboard = ({ resetDash }) => {
         getUser();
     }, [session])
 
-    console.log(user, session, org);
+    // console.log(user, session, org);
 
     return (
         <>

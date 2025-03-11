@@ -106,7 +106,7 @@ const YourQuizes = () => {
 
     // Terminate quiz
     const handleTerminateQuiz = async (quizId) => {
-        console.log("Terminating quiz with ID:", quizId);
+        // console.log("Terminating quiz with ID:", quizId);
         var res = await terminateQuiz(quizId);
         // console.log(res);
         if (res.success) {

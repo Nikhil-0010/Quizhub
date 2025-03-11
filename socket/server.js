@@ -6,6 +6,11 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 dotenv.config();
+
+const MONGODB_URI = process.env.MONGODB_URI;
+const PORT = process.env.PORT || 4000;
+
+
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
@@ -22,8 +27,8 @@ const activeQuizWatchers = new Map(); // Store active watchers per quiz
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect("mongodb://localhost:27017/quizhub", {
-      useNewUrlParser: true,
+    const conn = await mongoose.connect(MONGODB_URI, {
+      useUnifiedTopology: true,
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     QuizAttempt = conn.connection.db.collection("quizattempts");
@@ -97,17 +102,16 @@ io.on('connection', async (socket) => {
   }
 
   socket.on('disconnect', () => {
-    console.log(`User left quiz ${quizId}`);
+    // console.log(`User left quiz ${quizId}`);
     const room = io.sockets.adapter.rooms.get(quizId);
     if (!room) {
-      console.log(`No users left in quiz ${quizId}, stopping watcher`);
+      // console.log(`No users left in quiz ${quizId}, stopping watcher`);
       activeQuizWatchers.get(quizId).close();
       activeQuizWatchers.delete(quizId);
     }
   })
 })
 
-const PORT = 4000;
 
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

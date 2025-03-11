@@ -565,7 +565,7 @@ export const registerOrg = async (orgData, userData) => {
     if (userData.isReg) await User.updateOne({ _id: user._id }, { $push: { user_type: { type: "Organization", rights: "admin" } } });
     await User.updateOne({ _id: user._id }, { $set: { organization: org._id } });
 
-    console.log(org, user);
+    // console.log(org, user);
     return { status: true, message: "Organization created successfully" };
   }
   catch (err) {
