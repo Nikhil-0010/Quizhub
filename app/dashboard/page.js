@@ -4,7 +4,7 @@
 // import StudentDashboard from '@/components/Dashboard/org/StudentDashboard'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation';
-import React, { useState, useEffect, lazy } from 'react'
+import React, { useState, useEffect, lazy, useCallback } from 'react'
 import Loading from '@/components/Loading'
 import dynamic from 'next/dynamic'
 
@@ -28,10 +28,10 @@ const Dashboard = () => {
     return '';
   });
 
-  const resetDash = () => {
+  const resetDash = useCallback(() => {
     localStorage.removeItem('selectedDashboard');
     setSelectedDashboard('');
-  }
+  }, []);
 
   useEffect(() => {
     if (status === 'loading') return; // Do nothing while loading

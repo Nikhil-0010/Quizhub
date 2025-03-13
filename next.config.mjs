@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: "standalone", // Optimized for deployment
+    // output: "standalone", // Optimized for deployment
     experimental: {
     serverActions: {}
   },
