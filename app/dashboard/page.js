@@ -8,14 +8,13 @@ import React, { useState, useEffect, lazy, useCallback } from 'react'
 import Loading from '@/components/Loading'
 import dynamic from 'next/dynamic'
 
-const IndiDashboard = lazy(()=> import('@/components/Dashboard/indi/IndiDashboard'));
-const AdminDashboard = dynamic(()=> import('@/components/Dashboard/org/AdminDashboard'),{
-  loading: ()=> <Loading />
+const IndiDashboard = lazy(() => import('@/components/Dashboard/indi/IndiDashboard'));
+const AdminDashboard = dynamic(() => import('@/components/Dashboard/org/AdminDashboard'), {
+  loading: () => <Loading />
 });
-const StudentDashboard = dynamic(()=>import('@/components/Dashboard/org/StudentDashboard'),{
-  loading: ()=> <Loading />
+const StudentDashboard = dynamic(() => import('@/components/Dashboard/org/StudentDashboard'), {
+  loading: () => <Loading />
 })
-
 
 const Dashboard = () => {
   const { data: session, status } = useSession();
@@ -33,8 +32,20 @@ const Dashboard = () => {
     setSelectedDashboard('');
   }, []);
 
+  console.log(selectedDashboard);
+
   useEffect(() => {
-    if (status === 'loading') return; // Do nothing while loading
+    if (status == 'loading' || !session) {
+      return (
+        <div className="flex justify-center items-center h-[90.7vh] bg-gray-50 dark:bg-transparent">
+          {status === 'loading' ? (
+            <Loading />
+          ) : (
+            <Loading content="Redirecting to login..." />
+          )}
+        </div>
+      );
+    }
     if (!session) {
       router.replace("/login");
     }
@@ -47,22 +58,6 @@ const Dashboard = () => {
     }
   }, [selectedDashboard]);
 
-  if (status == 'loading' || !session) {
-    return (
-      <div className="flex justify-center items-center h-[90.7vh] bg-gray-50 dark:bg-transparent">
-        
-            {status === 'loading' ? (
-              <Loading />
-            ) : (
-              <Loading content="Redirecting to login..." />
-            )}
-      </div>
-    );
-  }
-
-  // if (!session) {
-  //   return <div></div>; // You can replace this with a redirect to the login page
-  // }
 
   if (session?.user?.user_type.length === 1) {
     let userType = session?.user?.user_type[0]?.type;
