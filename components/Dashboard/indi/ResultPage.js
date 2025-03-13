@@ -35,7 +35,7 @@ const ResultPage = ({ quizId, userEmail }) => {
         fetchQuizData();
 
         // Connect to socket server
-        const socket = io(`http://${window.location.hostname}:4000`, {
+        const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL, {
             query: { quizId },
             transports: ['websocket'],
         })
