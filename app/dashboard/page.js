@@ -8,24 +8,19 @@ import React, { useState, useEffect, lazy, useCallback } from 'react'
 import Loading from '@/components/Loading'
 import dynamic from 'next/dynamic'
 
-const IndiDashboard = lazy(() => import('@/components/Dashboard/indi/IndiDashboard'));
-const AdminDashboard = dynamic(() => import('@/components/Dashboard/org/AdminDashboard'), {
-  loading: () => <Loading />
+const IndiDashboard = lazy(()=> import('@/components/Dashboard/indi/IndiDashboard'));
+const AdminDashboard = dynamic(()=> import('@/components/Dashboard/org/AdminDashboard'),{
+  loading: ()=> <Loading />
 });
-const StudentDashboard = dynamic(() => import('@/components/Dashboard/org/StudentDashboard'), {
-  loading: () => <Loading />
+const StudentDashboard = dynamic(()=>import('@/components/Dashboard/org/StudentDashboard'),{
+  loading: ()=> <Loading />
 })
+
 
 const Dashboard = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [selectedDashboard, setSelectedDashboard] = useState(() => {
-    // Get the initial state from local storage
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('selectedDashboard') || '';
-    }
-    return '';
-  });
+  const [selectedDashboard, setSelectedDashboard] = useState('');
 
   const resetDash = useCallback(() => {
     localStorage.removeItem('selectedDashboard');
@@ -35,28 +30,35 @@ const Dashboard = () => {
   console.log(selectedDashboard);
 
   useEffect(() => {
-    if (status == 'loading' || !session) {
-      return (
-        <div className="flex justify-center items-center h-[90.7vh] bg-gray-50 dark:bg-transparent">
-          {status === 'loading' ? (
-            <Loading />
-          ) : (
-            <Loading content="Redirecting to login..." />
-          )}
-        </div>
-      );
-    }
+    if (status === 'loading') return; // Do nothing while loading
     if (!session) {
       router.replace("/login");
     }
   }, [session, status, router]);
 
   useEffect(() => {
+    // Get the initial state from local storage
+    if (typeof window !== 'undefined') {
+      setSelectedDashboard(localStorage.getItem('selectedDashboard') || '');
+    }
     // Save the selected dashboard to local storage
     if (selectedDashboard) {
       localStorage.setItem('selectedDashboard', selectedDashboard);
     }
   }, [selectedDashboard]);
+
+  if (status == 'loading' || !session) {
+    return (
+      <div className="flex justify-center items-center h-[90.7vh] bg-gray-50 dark:bg-transparent">
+        
+            {status === 'loading' ? (
+              <Loading />
+            ) : (
+              <Loading content="Redirecting to login..." />
+            )}
+      </div>
+    );
+  }
 
 
   if (session?.user?.user_type.length === 1) {
