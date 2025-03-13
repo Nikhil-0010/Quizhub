@@ -24,8 +24,6 @@ const IndiDashboard = ({ resetDash }) => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  console.log("resetDash prop: ",resetDash);
-
   // const [isActive, setIsActive] = useState({
   //   any: true,
   //   menu_CreateQuiz:true,
@@ -104,7 +102,12 @@ const IndiDashboard = ({ resetDash }) => {
             <div className="title">
               <h2 className='sm:text-3xl text-xl font-bold font-serif' >Welcome, <span className='text-[#FF4c00]'>{session?.user?.name}</span></h2>
             </div>
-            <button onClick={()=>resetDash()} className='bg-[#FF5F1F] w-20 h-9 px-2 rounded-lg text-gray-50 '>Go back</button>
+            
+            {session?.user?.user_type?.length === 2? (
+              <button onClick={()=>resetDash()} className='bg-[#FF5F1F] w-20 h-9 px-2 rounded-lg text-gray-50 '>Switch</button>
+            ):(
+              <button onClick={() => signOut()} className='bg-[#FF5F1F] w-20 h-9 px-2 rounded-lg text-gray-50 '>Logout</button>
+            )}
           </div>
           <div className="main-section h-[calc(91.3vh-64px)] ">
             <div className={`menu relative h-12 flex bg-[#FF5F1F] text-white p-3 pb-0 border-b-2 border-zinc-50 dark:border-zinc-800 gap-2 sm:gap-4`}>

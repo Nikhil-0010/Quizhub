@@ -20,14 +20,18 @@ const StudentDashboard = dynamic(()=>import('@/components/Dashboard/org/StudentD
 const Dashboard = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [selectedDashboard, setSelectedDashboard] = useState('');
+  const [selectedDashboard, setSelectedDashboard] = useState(() => {
+    // Get the initial state from local storage
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('selectedDashboard') || '';
+    }
+    return '';
+  });
 
   const resetDash = useCallback(() => {
     localStorage.removeItem('selectedDashboard');
     setSelectedDashboard('');
   }, []);
-
-  console.log(selectedDashboard);
 
   useEffect(() => {
     if (status === 'loading') return; // Do nothing while loading
@@ -37,10 +41,6 @@ const Dashboard = () => {
   }, [session, status, router]);
 
   useEffect(() => {
-    // Get the initial state from local storage
-    if (typeof window !== 'undefined') {
-      setSelectedDashboard(localStorage.getItem('selectedDashboard') || '');
-    }
     // Save the selected dashboard to local storage
     if (selectedDashboard) {
       localStorage.setItem('selectedDashboard', selectedDashboard);

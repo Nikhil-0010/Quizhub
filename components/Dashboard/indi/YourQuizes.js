@@ -687,7 +687,7 @@ const YourQuizes = () => {
                     <div className={`subjects w-full md:max-w-[25%] lg:max-w-[25%] min-h-[30%] md:min-h-[50%]  p-4 py-8 flex flex-col overflow-auto transition ease-in-out delay-100 duration-[700ms] ${loading ? "border-t-2 border-transparent" : "border-y-2 border-[#ff5f1f] shadow-[inset_0px_5px_12px_-6px_rgb(255,95,31)] bg-neutral-100 dark:bg-zinc-900"} rounded-lg `}>
                         {/* {loading && <div>Loading...</div>} */}
                         {!loading && quizzes.length === 0 && <div className='font-semibold text-stone-800 dark:text-[#e3e3e3]'>No quizzes created yet!</div>}
-                        <div className={`relative -top-6 bg-transparent w-full text-center pt-1 h-fit border-b-[1.4px] border-gray-300 dark:border-neutral-600 ${loading?"hidden":"visible"} `}>Subjects</div>
+                        <div className={`relative -top-6 bg-transparent w-full text-center pt-1 h-fit border-b-[1.4px] border-gray-300 dark:border-neutral-600 ${loading && quizzes.length===0 ?"hidden":"visible"} `}>Subjects</div>
                         <ul className='w-full flex flex-col gap-2'>
                             {quizzes.length > 0 && !loading && (<>
                                 <motion.li
@@ -731,7 +731,7 @@ const YourQuizes = () => {
                                         exit={isMobile ? { opacity: 0, y: 40 } : { opacity: 0, x: 80, rotateY: -90 }}
                                         transition={{ duration: 0.4, delay: 0.1 * (index), type: 'spring', stiffness: 60 }}
                                         layout
-                                        className='quiz-box min-w-[200px] max-w-[15%] min-h-[230px] max-h-[50%] bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-600 text-neutral-800 dark:text-[#e3e3e3]  rounded-lg flex flex-col border-2 border-neutral-200 bg-opacity-60 dark:bg-opacity-100 cursor-pointer relative transition-shadow  ease-in-out duration-200  hover:shadow-[0_4px_6px_-1px_rgba(255,95,31,0.47)]'
+                                        className='quiz-box min-w-[200px] max-w-[15%] min-h-[230px] max-h-[min(275px, 50%)] bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-600 text-neutral-800 dark:text-[#e3e3e3]  rounded-lg flex flex-col border-2 border-neutral-200 bg-opacity-60 dark:bg-opacity-100 cursor-pointer relative transition-shadow  ease-in-out duration-200  hover:shadow-[0_4px_6px_-1px_rgba(255,95,31,0.47)]'
                                     >
                                         <div className="cover h-3/4 rounded-t-lg">
                                             <img src={null} alt='Quiz cover' className="image w-full h-full border-b-2 border-transparent" />
