@@ -36,7 +36,7 @@ const connectDB = async () => {
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     QuizAttempt = conn.connection.db.collection("quizattempts");
-    console.log("Attempts ",QuizAttempt);
+    // console.log("Attempts ",QuizAttempt);
     retryAttempts = 0;
   }catch (error) {
     console.error(`MongoDB Connection Error: ${error.message}`);
@@ -120,7 +120,7 @@ io.on('connection', async (socket) => {
 
   // Send the initial leaderboard to user
   leaderboard = await getLeaderboard(quizId);
-  console.log("Leaderboard: ", leaderboard);
+  // console.log("Leaderboard: ", leaderboard);
   socket.emit('leaderboardUpdate', leaderboard);
 
   // Start watching if it's not already active
