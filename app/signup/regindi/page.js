@@ -75,6 +75,7 @@ const Regindi = () => {
         rtl={false}
         pauseOnFocusLoss
         draggable
+        draggablePercent={60}
         pauseOnHover
         theme="light"
       />

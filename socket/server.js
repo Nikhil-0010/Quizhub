@@ -25,20 +25,36 @@ const { ObjectId } = mongoose.Types;
 let QuizAttempt;
 let leaderboard = [];
 const activeQuizWatchers = new Map(); // Store active watchers per quiz
+let retryAttempts = 0;
+const maxRetries = 4; // Limit retries to 4
 
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(MONGODB_URI, {
+      useNewUrlParser: true,
       useUnifiedTopology: true,
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     QuizAttempt = conn.connection.db.collection("quizattempts");
-  } catch (error) {
-    console.error(`MongoDb Connection Error: ${error.message}`);
-    process.exit(1);
+    console.log("Attempts ",QuizAttempt);
+    retryAttempts = 0;
+  }catch (error) {
+    console.error(`MongoDB Connection Error: ${error.message}`);
+
+    if (retryAttempts < maxRetries) {
+      retryAttempts++;
+      const retryDelay = Math.min(2000 + (retryAttempts*1000), 12000); // Increase delay, max 10s
+      console.log(`Retrying connection... Attempt ${retryAttempts} of ${maxRetries} in ${retryDelay / 1000}s`);
+      setTimeout(connectDB, retryDelay);
+    } else {
+      console.error("Max retries reached. Exiting...");
+      process.exit(1);
+    }
   }
 }
-await connectDB();
+(async () => {
+  await connectDB();
+})(); // IIFE to connect to MongoDB
 
 // console.log(QuizAttempt);
 
@@ -47,7 +63,7 @@ const getLeaderboard = async (quizId) => {
     if (!QuizAttempt) throw new Error("Database not connected yet");
 
     // Fetch top 10 leaderboard entries based on scores
-    let leaderboard = await QuizAttempt.find({quizId: new ObjectId(quizId)})
+    let leaderboard = await QuizAttempt.find({ quizId: new ObjectId(quizId) })
       .sort({ score: -1 })
       .toArray();
 
@@ -67,34 +83,44 @@ const sendLeaderboardUpdate = async (quizId) => {
 }
 
 const watchQuizAttempt = async (quizId) => {
+  try {
     let objectQuizId = new ObjectId(quizId);
-  let pipeline = [
-    {
-      $match: {
-        'fullDocument.quizId': objectQuizId,
-        operationType: { $in: ['insert', 'update', 'replace'] },
+    let pipeline = [
+      {
+        $match: {
+          'fullDocument.quizId': objectQuizId,
+          operationType: { $in: ['insert', 'update', 'replace'] },
+        }
       }
-    }
-  ]
+    ]
 
-  let changeStream = QuizAttempt.watch(pipeline, {fullDocument: 'updateLookup'});
+    let changeStream = QuizAttempt.watch(pipeline, { fullDocument: 'updateLookup' });
 
-  changeStream.on('change', async (change) => {
-    console.log(`Change detected for quiz ${quizId}`, change);
-    await sendLeaderboardUpdate(quizId);
-  })
-  // Store the Change Stream instance
-  activeQuizWatchers.set(quizId, changeStream);
+    changeStream.on('change', async (change) => {
+      console.log(`Change detected for quiz ${quizId}`, change);
+      await sendLeaderboardUpdate(quizId);
+    })
+
+    changeStream.on('error', (err) => {
+      console.error(`Change stream error for quiz ${quizId}:`, err);
+      setTimeout(() => watchQuizAttempt(quizId), 5000); // Retry after 5s
+    });
+
+    // Store the Change Stream instance
+    activeQuizWatchers.set(quizId, changeStream);
+  } catch (error) {
+    console.error('Error watching quiz attempt:', error);
+  }
 }
 
 io.on('connection', async (socket) => {
   const { quizId } = socket.handshake.query;
   socket.join(quizId);
-  console.log(`User joined quiz ${quizId}` , socket.id)
+  console.log(`User joined quiz ${quizId}`, socket.id)
 
   // Send the initial leaderboard to user
   leaderboard = await getLeaderboard(quizId);
-  // console.log(leaderboard);
+  console.log("Leaderboard: ", leaderboard);
   socket.emit('leaderboardUpdate', leaderboard);
 
   // Start watching if it's not already active
@@ -107,7 +133,7 @@ io.on('connection', async (socket) => {
     const room = io.sockets.adapter.rooms.get(quizId);
     if (!room) {
       // console.log(`No users left in quiz ${quizId}, stopping watcher`);
-      activeQuizWatchers.get(quizId).close();
+      activeQuizWatchers.get(quizId)?.close();
       activeQuizWatchers.delete(quizId);
     }
   })

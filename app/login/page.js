@@ -96,6 +96,7 @@ return (
             rtl={false}
             pauseOnFocusLoss
             draggable
+            draggablePercent={60}
             pauseOnHover
             theme="light"
             // toastStyle={{background:"white", color: "#FF5F1F"}}

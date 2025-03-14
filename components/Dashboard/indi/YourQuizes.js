@@ -76,7 +76,7 @@ const YourQuizes = () => {
     const handleCopyLink = () => {
         //Copy to clipboard
         navigator.clipboard.writeText(quizLink);
-        toast.success("Link copied to clipboard", {
+        toast.success("Link copied", {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -649,37 +649,39 @@ const YourQuizes = () => {
                     <>
                         <h2 className="text-lg font-bold">Share Quiz</h2>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                            Copy the below link. <strong>{selectedQuiz.title}</strong>
+                            Copy or Share the link.
                         </p>
-                        <div className=' flex items-center w-full mt-2'>
-                            <input readOnly className='w-full border-[1.4px] border-gray-300 py-2 px-4 rounded outline-none dark:bg-transparent dark:border-neutral-700  focus:border-gray-500' type="text" name="" value={quizLink} />
-                            <button className='ml-3 flex items-center active:scale-90 transition-transform dark:invert rounded-full p-1 hover:bg-gray-200' onClick={handleCopyLink} title='Copy Link'>
-                                <img src="copy.svg" alt="copy" />
-                            </button>
-
-                            <Link href={quizLink} target='_blank' about='Link' className='flex items-center'>
-                                <button className='flex items-center active:scale-90 transition-transform dark:invert rounded-full p-1 hover:bg-gray-200' title='Open Link'>
-                                    <img src="open-link.svg" alt="link" />
+                        <div className=' flex flex-col sm:flex-row items-center w-full gap-1 sm:gap-2 mt-2'>
+                            <input readOnly className='w-full border-[1.4px] border-gray-300 py-2 px-2 sm:px-4 rounded outline-none dark:bg-transparent dark:border-neutral-700  focus:border-gray-500' type="text" name="" value={quizLink} />
+                            <div className='flex gap-1 sm:gap-0'>
+                                <button className='flex items-center active:scale-90 transition-transform dark:invert rounded-full p-1 hover:bg-gray-200' onClick={handleCopyLink} title='Copy Link'>
+                                    <img src="copy.svg" alt="copy" />
                                 </button>
-                            </Link>
-                            <button
-                                type="button"
-                                title='Share'
-                                className="flex items-center active:scale-90 transition-transform dark:invert rounded-full p-1 hover:bg-gray-200"
-                                onClick={() => {
-                                    if (navigator.share) {
-                                        navigator.share({
-                                            title: selectedQuiz.title,
-                                            text: 'Check out this quiz!',
-                                            url: quizLink,
-                                        }).catch((error) => console.error('Error sharing', error));
-                                    } else {
-                                        alert('Web Share API is not supported in your browser.');
-                                    }
-                                }}
-                            >
-                                <img src="share2.svg" alt="share"/>
-                            </button>
+
+                                <Link href={quizLink} target='_blank' about='Link' className='flex items-center'>
+                                    <button className='flex items-center active:scale-90 transition-transform dark:invert rounded-full p-1 hover:bg-gray-200' title='Open Link'>
+                                        <img src="open-link.svg" alt="link" />
+                                    </button>
+                                </Link>
+                                <button
+                                    type="button"
+                                    title='Share'
+                                    className="flex items-center active:scale-90 transition-transform dark:invert rounded-full p-1 hover:bg-gray-200"
+                                    onClick={() => {
+                                        if (navigator.share) {
+                                            navigator.share({
+                                                title: selectedQuiz.title,
+                                                text: 'Check out this quiz!',
+                                                url: quizLink,
+                                            }).catch((error) => console.error('Error sharing', error));
+                                        } else {
+                                            alert('Web Share API is not supported in your browser.');
+                                        }
+                                    }}
+                                >
+                                    <img src="share2.svg" alt="share" />
+                                </button>
+                            </div>
                         </div>
                         <button
                             type="button"

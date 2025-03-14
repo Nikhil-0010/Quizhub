@@ -91,6 +91,7 @@ const IndiDashboard = ({ resetDash }) => {
         rtl={false}
         pauseOnFocusLoss
         draggable
+        draggablePercent={60}
         pauseOnHover
         theme="light"
         toastStyle={{ background: "#FF5F1F" }}
