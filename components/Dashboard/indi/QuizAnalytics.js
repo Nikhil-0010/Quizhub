@@ -62,7 +62,7 @@ const QuizAnalytics = () => {
   return (
     <div className="sm:px-3 text-neutral-800 dark:text-[#e3e3e3]">
       <h1 className="text-2xl font-bold text-center mb-6">Quiz Analytics</h1>
-      <div className="p-4 sm:p-6 rounded bg-zinc-100 dark:bg-neutral-800 dark:border-neutral-700 border ">
+      <div className="p-4 sm:p-6 rounded bg-stone-100 dark:bg-neutral-800 dark:border-neutral-700 border border-gray-200">
         {loading ? (<Loading content={"Fetching quiz info..."} />) : (
           <>
             {/* Quiz Selection */}
@@ -94,7 +94,7 @@ const QuizAnalytics = () => {
           {/* Analytics Display */}
           {analytics ? (
             <>
-              <div className="bg-white dark:bg-neutral-900 shadow-md dark:shadow-neutral-600 rounded-lg p-6">
+              <div className="bg-white dark:bg-neutral-900 shadow-md dark:shadow-neutral-950 rounded-lg p-6">
                 <h2 className="text-lg font-semibold text-gray-800 dark:text-inherit mb-4">{analytics.title} Analytics</h2>
 
                 {/* Quiz info */}

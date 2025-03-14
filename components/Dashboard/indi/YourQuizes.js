@@ -100,7 +100,7 @@ const YourQuizes = () => {
 
     //Share quiz
     const handleShareQuiz = async (quizId) => {
-        setQuizLink(`http://localhost:3000/quiz/${quizId}`);
+        setQuizLink(`${process.env.NEXT_PUBLIC_URL}/quiz/${quizId}`);
         setModalType("share");
     };
 
@@ -651,17 +651,35 @@ const YourQuizes = () => {
                         <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
                             Copy the below link. <strong>{selectedQuiz.title}</strong>
                         </p>
-                        <div className=' flex items-center w-full gap-1 mt-2'>
+                        <div className=' flex items-center w-full mt-2'>
                             <input readOnly className='w-full border-[1.4px] border-gray-300 py-2 px-4 rounded outline-none dark:bg-transparent dark:border-neutral-700  focus:border-gray-500' type="text" name="" value={quizLink} />
-                            <button className='flex items-center active:scale-90 transition-transform dark:invert' onClick={handleCopyLink} title='Copy Link'>
+                            <button className='ml-3 flex items-center active:scale-90 transition-transform dark:invert rounded-full p-1 hover:bg-gray-200' onClick={handleCopyLink} title='Copy Link'>
                                 <img src="copy.svg" alt="copy" />
                             </button>
 
                             <Link href={quizLink} target='_blank' about='Link' className='flex items-center'>
-                                <button className='flex items-center active:scale-90 transition-transform dark:invert' title='Open Link'>
-                                    <img src="link-external.svg" alt="link" />
+                                <button className='flex items-center active:scale-90 transition-transform dark:invert rounded-full p-1 hover:bg-gray-200' title='Open Link'>
+                                    <img src="open-link.svg" alt="link" />
                                 </button>
                             </Link>
+                            <button
+                                type="button"
+                                title='Share'
+                                className="flex items-center active:scale-90 transition-transform dark:invert rounded-full p-1 hover:bg-gray-200"
+                                onClick={() => {
+                                    if (navigator.share) {
+                                        navigator.share({
+                                            title: selectedQuiz.title,
+                                            text: 'Check out this quiz!',
+                                            url: quizLink,
+                                        }).catch((error) => console.error('Error sharing', error));
+                                    } else {
+                                        alert('Web Share API is not supported in your browser.');
+                                    }
+                                }}
+                            >
+                                <img src="share2.svg" alt="share"/>
+                            </button>
                         </div>
                         <button
                             type="button"
@@ -687,7 +705,7 @@ const YourQuizes = () => {
                     <div className={`subjects w-full md:max-w-[25%] lg:max-w-[25%] min-h-[30%] md:min-h-[50%]  p-4 py-8 flex flex-col overflow-auto transition ease-in-out delay-100 duration-[700ms] ${loading ? "border-t-2 border-transparent" : "border-y-2 border-[#ff5f1f] shadow-[inset_0px_5px_12px_-6px_rgb(255,95,31)] bg-neutral-100 dark:bg-zinc-900"} rounded-lg `}>
                         {/* {loading && <div>Loading...</div>} */}
                         {!loading && quizzes.length === 0 && <div className='font-semibold text-stone-800 dark:text-[#e3e3e3]'>No quizzes created yet!</div>}
-                        <div className={`relative -top-6 bg-transparent w-full text-center pt-1 h-fit border-b-[1.4px] border-gray-300 dark:border-neutral-600 ${loading && quizzes.length===0 ?"hidden":"visible"} `}>Subjects</div>
+                        <div className={`relative -top-6 bg-transparent w-full text-center pt-1 h-fit border-b-[1.4px] border-gray-300 dark:border-neutral-600 ${loading || quizzes.length === 0 ? "hidden" : "visible"} `}>Subjects</div>
                         <ul className='w-full flex flex-col gap-2'>
                             {quizzes.length > 0 && !loading && (<>
                                 <motion.li
@@ -731,7 +749,8 @@ const YourQuizes = () => {
                                         exit={isMobile ? { opacity: 0, y: 40 } : { opacity: 0, x: 80, rotateY: -90 }}
                                         transition={{ duration: 0.4, delay: 0.1 * (index), type: 'spring', stiffness: 60 }}
                                         layout
-                                        className='quiz-box min-w-[200px] max-w-[15%] min-h-[230px] max-h-[min(275px, 50%)] bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-600 text-neutral-800 dark:text-[#e3e3e3]  rounded-lg flex flex-col border-2 border-neutral-200 bg-opacity-60 dark:bg-opacity-100 cursor-pointer relative transition-shadow  ease-in-out duration-200  hover:shadow-[0_4px_6px_-1px_rgba(255,95,31,0.47)]'
+                                        style={{ maxHeight: "min(50%, 275px)" }}
+                                        className='quiz-box min-w-[200px] max-w-[15%] min-h-[230px] bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-600 text-neutral-800 dark:text-[#e3e3e3]  rounded-lg flex flex-col border-2 border-neutral-200 bg-opacity-60 dark:bg-opacity-100 cursor-pointer relative transition-shadow  ease-in-out duration-200  hover:shadow-[0_4px_6px_-1px_rgba(255,95,31,0.47)]'
                                     >
                                         <div className="cover h-3/4 rounded-t-lg">
                                             <img src={null} alt='Quiz cover' className="image w-full h-full border-b-2 border-transparent" />

@@ -104,9 +104,9 @@ const IndiDashboard = ({ resetDash }) => {
             </div>
             
             {session?.user?.user_type?.length === 2? (
-              <button onClick={()=>resetDash()} className='bg-[#FF5F1F] w-20 h-9 px-2 rounded-lg text-gray-50 '>Switch</button>
+              <button onClick={()=>resetDash()} className='bg-[#FF5F1F] hover:bg-[#e64400] w-20 h-9 px-2 rounded-lg text-gray-50 '>Switch</button>
             ):(
-              <button onClick={() => signOut()} className='bg-[#FF5F1F] w-20 h-9 px-2 rounded-lg text-gray-50 '>Logout</button>
+              <button onClick={() => signOut()} className='bg-[#FF5F1F] hover:bg-[#e64400] w-20 h-9 px-2 rounded-lg text-gray-50 '>Logout</button>
             )}
           </div>
           <div className="main-section h-[calc(91.3vh-64px)] ">

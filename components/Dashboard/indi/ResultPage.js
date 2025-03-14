@@ -9,6 +9,7 @@ const ResultPage = ({ quizId, userEmail }) => {
     const [leaderboard, setLeaderboard] = useState([]);
     const [userRank, setUserRank] = useState(null);
     const [feedback, setFeedback] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // Fetch the quiz attempt result for the user
@@ -49,6 +50,7 @@ const ResultPage = ({ quizId, userEmail }) => {
             console.log(userRankData);
             setUserRank(userRankData !== -1 ? userRankData + 1 : updatedBoard.length + 1);
         })
+        setLoading(false);
 
         return () => {
             socket.disconnect();
@@ -91,7 +93,8 @@ const ResultPage = ({ quizId, userEmail }) => {
                     <h3 className="text-xl font-semibold text-center text-[#FF5F1F] mb-4 animate-fade-in-down">
                         Leaderboard
                     </h3>
-                    {leaderboard.length > 0 ? (
+                    {loading && <p className='text-center'>Loading...</p>}
+                    {!loading && leaderboard.length > 0 && (
                         <div className="overflow-x-auto rounded ">
                             <table className="min-w-full border dark:border-neutral-700 rounded table-auto text-sm">
                                 <thead>
@@ -105,12 +108,12 @@ const ResultPage = ({ quizId, userEmail }) => {
 
                                     {leaderboard.map((user, index) => (
                                         <tr
-                                            key={user.userEmail} 
+                                            key={user.userEmail}
                                             className={`border-b dark:border-neutral-600 ${user.userEmail === userEmail.toLowerCase()
-                                                    ? 'bg-yellow-300 dark:bg-emerald-500 font-bold'
-                                                    : index % 2 === 0
-                                                        ? 'bg-gray-100 dark:bg-neutral-700'
-                                                        : 'bg-white dark:bg-neutral-800'
+                                                ? 'bg-yellow-300 dark:bg-emerald-500 font-bold'
+                                                : index % 2 === 0
+                                                    ? 'bg-gray-100 dark:bg-neutral-700'
+                                                    : 'bg-white dark:bg-neutral-800'
                                                 } hover:bg-gray-200 dark:hover:bg-neutral-900 transition-all duration-200`}
                                         >
                                             <td className="px-2 sm:px-6 py-3 text-center">{index + 1}</td>
@@ -135,9 +138,9 @@ const ResultPage = ({ quizId, userEmail }) => {
                                 </tbody>
                             </table>
                         </div>
-                    ) : (
-                        <p>No leaderboard data available.</p>
                     )}
+                    {!loading && leaderboard.length === 0 && <p>No leaderboard data available.</p>}
+
                 </div>
 
                 {/* Quiz Feedback Section */}
@@ -170,7 +173,7 @@ const ResultPage = ({ quizId, userEmail }) => {
                             ))}
                         </div>
                     ) : (
-                        <p>No feedback available.</p>
+                        <p className='text-center'>Loading...</p>
                     )}
                 </div>
             </div>

@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 const Regtype = () => {
     const [regType, setRegType] = useState("Organization");
+    const [loading, setLoading] = useState(false);
     const handleChange = (e) => {
         setRegType(e.target.value)
         // console.log(regType);
@@ -25,7 +26,7 @@ const Regtype = () => {
                                 pathname: regType === 'Organization' ? "/signup/regorg" : "/signup/regindi",
                                 // query: {regType: regType},
                             }}>
-                                <button className='bg-[#FF4c00] w-full h-10 rounded-lg text-white font-bold border-[1.4px] border-[#FF5F1F]'>Submit</button>
+                                <button onClick={()=>setLoading(true)} className={`bg-[#FF4c00] w-full h-10 rounded-lg text-white font-bold border-[1.4px] border-[#FF5F1F] ${loading?"bg-opacity-80 cursor-not-allowed":"hover:bg-[#e64400]"}`}>{loading?"Submitting...":"Submit"}</button>
                             </Link>
                         </form>
                     </div>

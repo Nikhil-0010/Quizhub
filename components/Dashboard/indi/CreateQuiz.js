@@ -142,7 +142,7 @@ const CreateQuiz = () => {
 
                 <div className="menu-section h-full w-full">
                     <h3 className='text-2xl text-center mb-2 font-bold'>Create a Quiz</h3>
-                    <button onClick={toggleCreate} className="bg-[#FF4F1F] text-white w-24 h-9 rounded mx-auto block">
+                    <button onClick={toggleCreate} className="bg-[#FF4F1F] hover:bg-[#e64400] transition-all hover:rounded-3xl duration-200 text-white w-24 h-9 rounded-lg mx-auto block">
                         Create
                     </button>
                 </div> :
@@ -150,7 +150,7 @@ const CreateQuiz = () => {
                         <div className="quizSection flex flex-col gap-4">
                             <div className="heading flex justify-between">
                                 <h3 className="text-lg underline font-bold">Enter quiz details</h3>
-                                <button onClick={toggleCreate} className='w-24 h-9 rounded bg-red-700 text-white'>Cancel</button>
+                                <button onClick={toggleCreate} className='w-24 h-9 rounded bg-red-600 hover:bg-red-700 text-white'>Cancel</button>
                             </div>
                             {/* {successMessage && <p className="text-green-500">{successMessage}</p>} */}
                             <form className="flex flex-col gap-2 w-full" onSubmit={handleSubmit}>
@@ -163,7 +163,7 @@ const CreateQuiz = () => {
                                                 name="title"
                                                 value={formData.title ? formData.title : ""}
                                                 placeholder="Quiz Title"
-                                                className="border-[1.4px] dark:border-neutral-700 bg-transparent px-2 py-1 rounded focus:border-orange-400 outline-none border-gray-300"
+                                                className="border-[1.4px] dark:border-neutral-700 dark:focus:border-orange-400 bg-transparent px-2 py-1 rounded focus:border-orange-400 outline-none border-gray-300"
                                                 onChange={handleChange}
                                             />
                                             {errors.title && <p className="text-red-500">{errors.title}</p>}
@@ -175,7 +175,7 @@ const CreateQuiz = () => {
                                                 name="subject"
                                                 value={formData.subject ? formData.subject : ""}
                                                 placeholder="Subject"
-                                                className="border-[1.4px] dark:border-neutral-700 bg-transparent px-2 py-1 rounded focus:border-orange-400 outline-none border-gray-300"
+                                                className="border-[1.4px] dark:border-neutral-700 dark:focus:border-orange-400 bg-transparent px-2 py-1 rounded focus:border-orange-400 outline-none border-gray-300"
                                                 onChange={handleChange}
                                             />
                                             {errors.subject && <p className="text-red-500">{errors.subject}</p>}
@@ -203,7 +203,7 @@ const CreateQuiz = () => {
                                                     name="endDate"
                                                     id="endDate"
                                                     placeholder="dd/mm/yyyy"
-                                                    className="border-[1.4px] dark:border-neutral-700 bg-transparent disabled:bg-gray-200 dark:disabled:bg-neutral-700 px-2 py-1 rounded ml-2 focus:border-orange-400 outline-none disabled:border-gray-300 border-gray-300"
+                                                    className="border-[1.4px] dark:border-neutral-700 dark:focus:border-orange-400 bg-transparent disabled:bg-gray-200 dark:disabled:bg-neutral-700 px-2 py-1 rounded ml-2 focus:border-orange-400 outline-none disabled:border-gray-300 border-gray-300"
                                                     value={formData.endDate ? formData.endDate : ""}
                                                     onChange={handleChange}
                                                     disabled={formData.endless ? formData.endless : false}
@@ -224,7 +224,7 @@ const CreateQuiz = () => {
                                             exit={{ opacity:0, x:50 }}
                                             transition={{ duration:0.3 }}
                                             layout
-                                            key={index} className="flex flex-col md:flex-row gap-6 lg:gap-12 shadow-md dark:shadow-zinc-900 p-3 sm:p-6 rounded-lg border-[1.4px] dark:border-neutral-700 dark:bg-neutral-800 bg-slate-50">
+                                            key={index} className="flex flex-col md:flex-row gap-6 lg:gap-12 shadow-md dark:shadow-zinc-900 p-3 sm:p-6 rounded-lg border-[1.4px] dark:border-neutral-700 dark:focus:border-orange-400 dark:bg-neutral-800 bg-slate-50">
                                             {/* MCQ */}
                                             <div className='flex flex-col gap-2 w-full'>
                                                 {/* question */}
@@ -237,7 +237,7 @@ const CreateQuiz = () => {
                                                         id={`question_${index + 1}`}
                                                         autoComplete='off'
                                                         placeholder="Enter question"
-                                                        className="border-b-[1.4px] dark:border-neutral-700 bg-transparent px-2 py-1 focus:border-orange-400 outline-none border-gray-300 w-full"
+                                                        className="border-b-[1.4px] dark:border-neutral-700 dark:focus:border-orange-400 bg-transparent px-2 py-1 focus:border-orange-400 outline-none border-gray-300 w-full"
                                                         onChange={(e) => handleChange(e, index)}
                                                     />
                                                 </div>
@@ -254,7 +254,7 @@ const CreateQuiz = () => {
                                                                 id={`option_${optIndex + 1}`}
                                                                 autoComplete='off'
                                                                 placeholder={`Option ${String.fromCharCode(65 + optIndex)}`}
-                                                                className="border-[1.4px] dark:border-neutral-700 bg-transparent px-2 py-1 rounded focus:border-orange-400 outline-none border-gray-300 w-full"
+                                                                className="border-[1.4px] dark:border-neutral-700 dark:focus:border-orange-400 bg-transparent px-2 py-1 rounded focus:border-orange-400 outline-none border-gray-300 w-full"
                                                                 onChange={(e) => handleChange(e, index)}
                                                             />
                                                         </div>
@@ -277,7 +277,7 @@ const CreateQuiz = () => {
                                                     name={`mc_correctAnswer_${index}`}
                                                     value={mcq.correctAnswer}
                                                     onChange={(e) => handleChange(e, index)}
-                                                    className="border-[1.4px] dark:border-neutral-700 dark:bg-neutral-800  p-1 rounded focus:border-orange-400 outline-none bg-transparent border-gray-300"
+                                                    className="border-[1.4px] dark:border-neutral-700 dark:focus:border-orange-400 dark:bg-neutral-800  p-1 rounded focus:border-orange-400 outline-none bg-transparent border-gray-300"
                                                 >
                                                     <option value="">Select correct option</option>
                                                     {mcq.options.map((option, optIndex) => (
@@ -302,9 +302,9 @@ const CreateQuiz = () => {
                                                         value={mcq.marks}
                                                         placeholder="Enter marks"
                                                         onChange={(e) => handleChange(e, index)}
-                                                        className="border-[1.4px] dark:border-neutral-700 bg-transparent px-2 py-1 rounded focus:border-orange-400 outline-none border-gray-300"
+                                                        className="border-[1.4px] dark:border-neutral-700 dark:focus:border-orange-400 bg-transparent px-2 py-1 rounded focus:border-orange-400 outline-none border-gray-300"
                                                     /></div>
-                                                <button onClick={() => handleDeleteQuestion(index)} className="delete bg-[#FF4F1F] text-white w-20 h-9 rounded ">Delete</button>
+                                                <button onClick={() => handleDeleteQuestion(index)} className="delete bg-[#FF4F1F] hover:bg-[#e64400] text-white w-20 h-9 rounded ">Delete</button>
                                             </div>
                                         </motion.div>
                                     ))}
@@ -313,11 +313,11 @@ const CreateQuiz = () => {
                                 <button
                                     type="button"
                                     onClick={handleAddQuestion}
-                                    className="bg-[#FF4F1F] text-white w-32 h-9 rounded mt-4"
+                                    className="bg-[#FF4F1F] hover:bg-[#e64400] text-white w-28 h-9 rounded mt-4"
                                 >
                                     Add MCQ
                                 </button>
-                                <button type="submit" className="bg-[#FF4F1F] text-white w-24 h-9 rounded">
+                                <button type="submit" className="bg-[#FF4F1F] hover:bg-[#e64400] text-white w-24 h-9 rounded">
                                     Submit
                                 </button>
                             </form>
