@@ -62,36 +62,50 @@ const QuizAnalytics = () => {
   return (
     <div className="sm:px-3 text-neutral-800 dark:text-[#e3e3e3]">
       <h1 className="text-2xl font-bold text-center mb-6">Quiz Analytics</h1>
-      <div className="p-4 sm:p-6 rounded bg-stone-100 dark:bg-neutral-800 dark:border-neutral-700 border border-gray-200">
+      <div className="p-4 sm:p-6 rounded bg-stone-200 bg-opacity-40 dark:bg-neutral-800 dark:border-neutral-700 border border-gray-200">
         {loading ? (<Loading content={"Fetching quiz info..."} />) : (
           <>
             {/* Quiz Selection */}
-            <div className="mb-6 mx-auto w-full sm:w-1/2">
-              <label htmlFor="quizSelect" className="mb-1 block font-medium">Select a Quiz</label>
-              <select
-                id="quizSelect"
-                onChange={handleQuizSelect}
-                value={selectedQuiz || ""}
-                className=" bg-gray-50 dark:bg-neutral-900 text-gray-900 dark:text-inherit dark:border-neutral-700 text-sm p-2.5 w-full border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#FF5F1f] outline-none transition-all duration-300 hover:border-[#FF5F1f] cursor-pointer"
-              >
-                <option value="">-- Select a Quiz --</option>
-                {quizzes.sort((a,b)=>b.createdAt-a.createdAt).map((quiz) => (
-                  <option key={quiz.quizId} value={quiz.quizId}>
-                    {quiz.title}  |  {quiz.subject}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </>)}
+                  <div className="mb-6 mx-auto w-full sm:w-1/2 relative">
+                    <label htmlFor="quizSelect" className="mb-1 block font-medium">Select a Quiz</label>
+                    <div className="relative">
+                    <select
+                      id="quizSelect"
+                      onChange={handleQuizSelect}
+                      value={selectedQuiz || ""}
+                      className=" bg-gray-50 dark:bg-neutral-900 text-gray-900 dark:text-inherit dark:border-neutral-700 text-sm p-2.5 w-full border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#FF5F1f] focus:border-transparent outline-none transition-all duration-300 hover:border-[#FF5F1f] cursor-pointer appearance-none"
+                      // onClick={(e) => e.target.classList.toggle('open')}
+                    >
+                      <option value="">-- Select a Quiz --</option>
+                      {quizzes.sort((a,b)=>b.createdAt-a.createdAt).map((quiz) => (
+                      <option key={quiz.quizId} value={quiz.quizId}>
+                        {quiz.title}  |  {quiz.subject}
+                      </option>
+                      ))}
+                    </select>
+                    <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                      <svg
+                      className={`w-4 h-4 transition-transform duration-300 ${selectedQuiz ? 'rotate-180' : ''}`}
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </span>
+                    </div>
+                  </div>
+                  </>)}
 
-        {quizzes.length === 0 && !loading && <p className="text-lg dark:text-gray-200 text-gray-700">No quizzes available.</p>}
+                {quizzes.length === 0 && !loading && <p className="text-lg dark:text-gray-200 text-gray-700">No quizzes available.</p>}
 
-        <div
-          className={`transition-all duration-500 ${analytics ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-        >
+                <div
+                  className={`transition-all duration-500 ${analytics ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                  }`}
+                >
 
-          {/* Analytics Display */}
+                  {/* Analytics Display */}
           {analytics ? (
             <>
               <div className="bg-white dark:bg-neutral-900 shadow-md dark:shadow-neutral-950 rounded-lg p-6">

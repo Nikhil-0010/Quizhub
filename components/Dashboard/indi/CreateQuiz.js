@@ -62,6 +62,10 @@ const CreateQuiz = () => {
     const handleDeleteQuestion = (index) => {
         const updatedMcqs = mcqs.filter((_, i) => i !== index);
         setMcqs(updatedMcqs);
+        //clear of that index
+        const newErrors = { ...errors };
+        delete newErrors[`question_${index}`];
+        setErrors(newErrors);
     };
 
     const validateForm = () => {
@@ -71,14 +75,17 @@ const CreateQuiz = () => {
         if (!formData.endless && !formData.endDate?.trim()) newErrors.endDate = 'End date is required';
 
         mcqs.forEach((mcq, index) => {
-            if (!mcq.question?.trim()) newErrors[`question_${index}`] = `Question ${index + 1} is required`;
-            if (!mcq.options.every(opt => opt.trim())) newErrors[`options_${index}`] = `All options for Q${index + 1} must be filled`;
-            if (!mcq.correctAnswer?.trim()) newErrors[`correctAnswer_${index}`] = `Correct answer for question ${index + 1} is required`;
+            if (!newErrors[`question_${index}`]) {
+                newErrors[`question_${index}`] = {};
+            }
+            newErrors[`question_${index}`].question = `Question ${index + 1} is required`;
+            if (!mcq.options.every(opt => opt.trim())) newErrors[`question_${index}`].option = `All options for Q${index + 1} must be filled`;
+            if (!mcq.correctAnswer?.trim()) newErrors[`question_${index}`].correctAnswer = `Correct answer for question ${index + 1} is required`;
             if (!mcq.marks || isNaN(Number(mcq.marks)) || Number(mcq.marks) <= 0) {
-                newErrors[`marks_${index}`] = `Valid marks for question ${index + 1} are required`;
+                newErrors[`question_${index}`].marks = `Valid marks for question ${index + 1} are required`;
             }
         });
-
+        console.log(newErrors);
         return newErrors;
     };
 
@@ -142,7 +149,7 @@ const CreateQuiz = () => {
 
                 <div className="menu-section h-full w-full">
                     <h3 className='text-2xl text-center mb-2 font-bold'>Create a Quiz</h3>
-                    <button onClick={toggleCreate} className="bg-[#FF4F1F] hover:bg-[#e64400] transition-all hover:rounded-3xl duration-200 text-white w-24 h-9 rounded-lg mx-auto block">
+                    <button onClick={toggleCreate} className="bg-[#FF4F1F] hover:bg-[#e64400] transition-all hover:rounded-3xl duration-200 text-white w-24 h-9 rounded-md mx-auto block">
                         Create
                     </button>
                 </div> :
@@ -150,7 +157,7 @@ const CreateQuiz = () => {
                         <div className="quizSection flex flex-col gap-4">
                             <div className="heading flex justify-between">
                                 <h3 className="text-lg underline font-bold">Enter quiz details</h3>
-                                <button onClick={toggleCreate} className='w-24 h-9 rounded bg-red-600 hover:bg-red-700 text-white'>Cancel</button>
+                                <button onClick={toggleCreate} className='w-20 h-9 bg-red-600 transition-all hover:bg-red-700 hover:rounded-3xl duration-200 rounded-md text-white'>Cancel</button>
                             </div>
                             {/* {successMessage && <p className="text-green-500">{successMessage}</p>} */}
                             <form className="flex flex-col gap-2 w-full" onSubmit={handleSubmit}>
@@ -166,7 +173,7 @@ const CreateQuiz = () => {
                                                 className="border-[1.4px] dark:border-neutral-700 dark:focus:border-orange-400 bg-transparent px-2 py-1 rounded focus:border-orange-400 outline-none border-gray-300"
                                                 onChange={handleChange}
                                             />
-                                            {errors.title && <p className="text-red-500">{errors.title}</p>}
+                                            {errors.title && <p className="text-red-500 text-xs mt-2">{errors.title}</p>}
                                         </div>
                                         <div className="flex flex-col gap-1 md:gap-2">
                                             <label htmlFor="subject">Subject</label>
@@ -178,7 +185,7 @@ const CreateQuiz = () => {
                                                 className="border-[1.4px] dark:border-neutral-700 dark:focus:border-orange-400 bg-transparent px-2 py-1 rounded focus:border-orange-400 outline-none border-gray-300"
                                                 onChange={handleChange}
                                             />
-                                            {errors.subject && <p className="text-red-500">{errors.subject}</p>}
+                                            {errors.subject && <p className="text-red-500 text-xs mt-2">{errors.subject}</p>}
                                         </div>
                                     </div>
                                     <fieldset>
@@ -205,15 +212,34 @@ const CreateQuiz = () => {
                                                     placeholder="dd/mm/yyyy"
                                                     className="border-[1.4px] dark:border-neutral-700 dark:focus:border-orange-400 bg-transparent disabled:bg-gray-200 dark:disabled:bg-neutral-700 px-2 py-1 rounded ml-2 focus:border-orange-400 outline-none disabled:border-gray-300 border-gray-300"
                                                     value={formData.endDate ? formData.endDate : ""}
-                                                    onChange={handleChange}
+                                                    onChange={(e) => {
+                                                        handleChange(e);
+                                                        const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+                                                        if (e.target.value === "" || regex.test(e.target.value)) {
+                                                            setErrors((prevErrors) => {
+                                                                const { endDate, ...rest } = prevErrors;
+                                                                return rest;
+                                                            });
+                                                        } else {
+                                                            setErrors((prevErrors) => ({
+                                                                ...prevErrors,
+                                                                endDate: "Invalid date format. Use dd/mm/yyyy.",
+                                                            }));
+                                                        }
+                                                    }}
+                                                    onKeyPress={(e) => {
+                                                        if (isNaN(e.key) && e.key !== "/") {
+                                                            e.preventDefault();
+                                                        }
+                                                    }}
                                                     disabled={formData.endless ? formData.endless : false}
                                                 />
-                                                {errors.endDate && <p className="text-red-500">{errors.endDate}</p>}
+                                                {errors.endDate && <p className="text-red-500 text-xs mt-2">{errors.endDate}</p>}
                                             </div>
                                         </div>
                                     </fieldset>
                                 </div>
-                                <label htmlFor="questions">Add Questions</label>
+                                <label htmlFor="questions font-bold">Questions</label>
                                 <AnimatePresence>
                                 <div id='questions' className="questions flex flex-col gap-6 mt-2">
                                     {/* Multiple choice Question */}
@@ -241,9 +267,9 @@ const CreateQuiz = () => {
                                                         onChange={(e) => handleChange(e, index)}
                                                     />
                                                 </div>
-                                                {errors[`question_${index}`] && <p className="text-red-500">{errors[`question_${index}`]}</p>}
+                                                {errors[`question_${index}`]?.question && <p className="text-red-500 text-xs mt-2">{errors[`question_${index}`]?.question}</p>}
                                                 {/* options */}
-                                                <div className="options pl-10 flex flex-col gap-2">
+                                                <div className="options pl-3 md:pl-10 flex flex-col gap-2">
                                                     {mcq.options.map((option, optIndex) => (
                                                         <div key={optIndex} className="flex items-center gap-2 w-full">
                                                             <label htmlFor={`option_${optIndex + 1}`}>{String.fromCharCode(65 + optIndex)}</label>
@@ -260,7 +286,7 @@ const CreateQuiz = () => {
                                                         </div>
 
                                                     ))}
-                                                    {errors[`options_${index}`] && <p className="text-red-500">{errors[`options_${index}`]}</p>}
+                                                    {errors[`question_${index}`]?.option && <p className="text-red-500 text-xs mt-2">{errors[`question_${index}`]?.option}</p>}
                                                 </div>
                                                 {/* <div className="correct_option flex items-center gap-2">
                                         <label className='' htmlFor={`correctAnswer_${index}`}>Correct Option</label>
@@ -286,11 +312,11 @@ const CreateQuiz = () => {
                                                         </option>
                                                     ))}
                                                 </select>
-                                                {errors[`correctAnswer_${index}`] && (
-                                                    <p className="text-red-500">{errors[`correctAnswer_${index}`]}</p>
+                                                {errors[`question_${index}`]?.correctAnswer && (
+                                                    <p className="text-red-500 text-xs mt-2">{errors[`question_${index}`]?.correctAnswer}</p>
                                                 )}
 
-                                                {errors[`marks_${index}`] && <p className="text-red-500">{errors[`marks_${index}`]}</p>}
+                                                {errors[`question_${index}`]?.marks && <p className="text-red-500 text-xs mt-2">{errors[`question_${index}`]?.marks}</p>}
                                             </div>
                                             {/* Modify */}
                                             <div className="modify flex flex-col gap-2 items-end">
@@ -304,7 +330,7 @@ const CreateQuiz = () => {
                                                         onChange={(e) => handleChange(e, index)}
                                                         className="border-[1.4px] dark:border-neutral-700 dark:focus:border-orange-400 bg-transparent px-2 py-1 rounded focus:border-orange-400 outline-none border-gray-300"
                                                     /></div>
-                                                <button onClick={() => handleDeleteQuestion(index)} className="delete bg-[#FF4F1F] hover:bg-[#e64400] text-white w-20 h-9 rounded ">Delete</button>
+                                                <button onClick={(e) => {e.preventDefault(); handleDeleteQuestion(index)}} className="delete bg-[#FF4F1F] hover:bg-[#e64400] text-white w-20 h-9 rounded-md ">Delete</button>
                                             </div>
                                         </motion.div>
                                     ))}
@@ -313,11 +339,11 @@ const CreateQuiz = () => {
                                 <button
                                     type="button"
                                     onClick={handleAddQuestion}
-                                    className="bg-[#FF4F1F] hover:bg-[#e64400] text-white w-28 h-9 rounded mt-4"
+                                    className="bg-[#FF4F1F] hover:bg-[#e64400] text-white w-24 h-9 rounded-md mt-4"
                                 >
                                     Add MCQ
                                 </button>
-                                <button type="submit" className="bg-[#FF4F1F] hover:bg-[#e64400] text-white w-24 h-9 rounded">
+                                <button type="submit" className="bg-[#FF4F1F] hover:bg-[#e64400] text-white w-20 h-9 rounded">
                                     Submit
                                 </button>
                             </form>

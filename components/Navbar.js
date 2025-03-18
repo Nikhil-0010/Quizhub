@@ -8,7 +8,11 @@ const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const { status } = useSession();
     const [isLogin, setIsLogin] = useState(false);
-    
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
     const handleScroll = useCallback(() => {
         setScrolled(window.scrollY > 50);
     }, []);
@@ -33,11 +37,28 @@ const Navbar = () => {
                 </div>
                 <div className='bg-slate-100 dark:bg-neutral-600 bg-opacity-60 w-[3px] h-7 rounded'></div>
                 <div className='text-white flex items-center gap-2'>
-                    {/* <button className='mode bg-[#e3e3e3] px-3 py-1 text-black dark:bg-neutral-800 dark:text-[#e3e3e3]  rounded-lg'>Change Mode</button> */}
-                    {isLogin?<button onClick={signOut} className='text-[#FF5F1F] bg-white hover:bg-opacity-70 dark:hover:bg-opacity-70 dark:bg-neutral-950 dark:bg-opacity-90 dark:border dark:border-neutral-700 w-20 h-9 px-2 font-bold rounded-lg'>Logout</button>:
-                    <Link href={"/login"}>
-                        <button className='text-[#FF5F1F] bg-white hover:bg-opacity-70 dark:hover:bg-opacity-70 dark:bg-neutral-950 dark:bg-opacity-90 dark:border dark:border-neutral-700 w-20 h-9 px-4 font-bold rounded-lg'>Login</button>
-                    </Link>}
+                    {isLogin ? (
+                        <div className="relative">
+                            <button onClick={toggleDropdown} className='text-[#FF5F1F] bg-slate-200 bg-opacity-40 border border-gray-100 hover:bg-opacity-10 dark:hover:bg-opacity-70 dark:bg-neutral-950 dark:bg-opacity-90 dark:border dark:border-neutral-700 w-fit h-9 px-2 font-bold rounded-md flex gap-2 items-center justify-between'>
+                                Account
+                                <span className={`transition-transform duration-300 ${dropdownOpen ? 'rotate-180' : 'rotate-0'}`}>
+                                    <div className="w-2 h-2 border-t-2 border-r-2 rounded-tr-sm border-white dark:border-neutral-500 transform rotate-[135deg]"></div>
+                                </span>
+                            </button>
+                            <div className={`absolute mt-2 w-fit md:w-48 transition-all duration-300 overflow-hidden ${dropdownOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"} bg-white dark:bg-neutral-800 rounded-md shadow-lg z-20`}>
+                                <Link href="/dashboard">
+                                    <div className="block px-4 py-2 rounded-t-md text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Dashboard</div>
+                                </Link>
+                                <button onClick={signOut} className="block w-full text-left px-4 py-2 rounded-b-md text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <Link href={"/login"}>
+                            <button className='text-[#FF5F1F] bg-white hover:bg-opacity-70 dark:hover:bg-opacity-70 dark:bg-neutral-950 dark:bg-opacity-90 dark:border dark:border-neutral-700 w-20 h-9 px-4 font-bold rounded-md'>Login</button>
+                        </Link>
+                    )}
                     <ThemeToggle />
                 </div>
             </div>

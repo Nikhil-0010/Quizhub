@@ -721,7 +721,7 @@ const YourQuizes = () => {
                                 </motion.li>
                             </>
                             )}
-                            {subjects.map((subject, index) => (
+                            {subjects.sort().map((subject, index) => (
                                 <motion.li
                                     key={index}
                                     onClick={() => handleSubjectSelect(subject)}

@@ -39,7 +39,20 @@ const ResultPage = ({ quizId, userEmail }) => {
         const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL, {
             query: { quizId },
             transports: ['websocket'],
-        })
+        });
+
+        socket.on('connect', () => {
+            setLoading(false);
+        });
+
+        socket.on('connect_error', (error) => {
+            console.error('Connection error:', error);
+            setLoading(false);
+        });
+
+        socket.on('connecting', () => {
+            setLoading(true);
+        });
 
         socket.on('leaderboardUpdate', (updatedBoard) => {
             setLeaderboard((prevLeaderboard) => {
@@ -50,7 +63,6 @@ const ResultPage = ({ quizId, userEmail }) => {
             console.log(userRankData);
             setUserRank(userRankData !== -1 ? userRankData + 1 : updatedBoard.length + 1);
         })
-        setLoading(false);
 
         return () => {
             socket.disconnect();
@@ -60,7 +72,7 @@ const ResultPage = ({ quizId, userEmail }) => {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-300 dark:from-zinc-800 dark:to-zinc-900 text-neutral-800 dark:text-[#e3e3e3] md:p-6">
-            <div className="bg-white dark:bg-zinc-900 dark:shadow-stone-800 shadow-2xl rounded-lg max-w-4xl xl:max-w-6xl mx-auto py-8 px-4 sm:p-8 transition-all duration-500">
+            <div className="bg-white dark:bg-zinc-900 dark:shadow-stone-800 shadow-2xl rounded-lg max-w-4xl min-h-screen xl:min-h-full xl:max-w-6xl mx-auto py-8 px-4 sm:p-8 transition-all duration-500">
                 {/* User Result Section */}
                 <div className="bg-white dark:bg-neutral-800 dark:border-neutral-700 flex flex-col items-center gap-4 rounded-lg shadow-lg p-6 mb-8 border border-gray-200 hover:shadow-xl transition-all duration-300">
                     <h3 className="text-xl font-semibold text-[#FF5F1F] animate-fade-in-down">
@@ -84,7 +96,7 @@ const ResultPage = ({ quizId, userEmail }) => {
                             </div>
                         </div>
                     ) : (
-                        <p>Loading your result...</p>
+                        <p>Loading your score ...</p>
                     )}
                 </div>
 
@@ -93,7 +105,7 @@ const ResultPage = ({ quizId, userEmail }) => {
                     <h3 className="text-xl font-semibold text-center text-[#FF5F1F] mb-4 animate-fade-in-down">
                         Leaderboard
                     </h3>
-                    {loading && <p className='text-center'>Loading...</p>}
+                    {loading && <p className='text-center'>Connecting to server ...</p>}
                     {!loading && leaderboard.length > 0 && (
                         <div className="overflow-x-auto rounded ">
                             <table className="min-w-full border dark:border-neutral-700 rounded table-auto text-sm">
@@ -139,7 +151,7 @@ const ResultPage = ({ quizId, userEmail }) => {
                             </table>
                         </div>
                     )}
-                    {!loading && leaderboard.length === 0 && <p>No leaderboard data available.</p>}
+                    {!loading && leaderboard.length === 0 && <p>Error connecting to server</p>}
 
                 </div>
 
@@ -173,7 +185,7 @@ const ResultPage = ({ quizId, userEmail }) => {
                             ))}
                         </div>
                     ) : (
-                        <p className='text-center'>Loading...</p>
+                        <p className='text-center'>Loading answers</p>
                     )}
                 </div>
             </div>

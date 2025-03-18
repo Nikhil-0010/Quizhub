@@ -99,15 +99,15 @@ const IndiDashboard = ({ resetDash }) => {
       <div className='h-[calc(100vh-53px)]  sm:max-h-[calc(100vh-36px)] w-full flex text-neutral-800 bg-white dark:bg-[var(--bg-dark)] dark:text-[#e3e3e3]'>
         {/* main container */}
         <div className='h-full w-full flex flex-col'>
-          <div className='h-16 flex justify-between items-center border-b-2 border-zinc-300 dark:border-neutral-700 px-4 '>
+          <div className='h-14 flex justify-between items-center border-b-2 border-zinc-300 dark:border-neutral-700 px-4 '>
             <div className="title">
               <h2 className='sm:text-3xl text-xl font-bold font-serif' >Welcome, <span className='text-[#FF4c00]'>{session?.user?.name}</span></h2>
             </div>
             
             {session?.user?.user_type?.length === 2? (
-              <button onClick={()=>resetDash()} className='bg-[#FF5F1F] hover:bg-[#e64400] w-20 h-9 px-2 rounded-lg text-gray-50 '>Switch</button>
+              <button onClick={()=>resetDash()} className='bg-[#FF5F1F] hover:bg-[#e64400] w-20 h-9 px-2 rounded-md text-gray-50 '>Switch</button>
             ):(
-              <button onClick={() => signOut()} className='bg-[#FF5F1F] hover:bg-[#e64400] w-20 h-9 px-2 rounded-lg text-gray-50 '>Logout</button>
+              <button onClick={() => signOut()} className='bg-[#FF5F1F] hover:bg-[#e64400] w-20 h-9 px-2 rounded-md text-gray-50 '>Logout</button>
             )}
           </div>
           <div className="main-section h-[calc(91.3vh-64px)] ">

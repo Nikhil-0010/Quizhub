@@ -16,7 +16,7 @@ const QuizId = async ({ params }) => {
     }
     else if(!quizData.endless && quizData.endDate < new Date()){
         return (
-            <div className='text-3xl font-light flex flex-col items-center gap-2 justify-center h-[90.4vh]'> Oops ≡ƒÿÉ  <span className='text-base'>Seems like quiz has expired..</span></div>
+            <div className='text-3xl font-light flex flex-col items-center gap-2 justify-center h-[90.4vh]'> Oops 😐  <span className='text-base'>Seems like quiz has expired...</span></div>
         )
     }
 
