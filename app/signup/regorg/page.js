@@ -16,11 +16,12 @@ const Regorg = () => {
     const [errors, setErrors] = useState({});
     const [form, setForm] = useState({});
     const [isReg, setIsReg] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const validateForm = () => {
         const newErrors = {};
         if (!userType) newErrors.userType = "Please select a user type.";
-        if (!form.desc?.trim()) newErrors.desc = "Description is required.";
+        if (userType=='Existing' && !form.desc?.trim()) newErrors.desc = "Description is required.";
         if (!form.email?.trim() || !/\S+@\S+\.\S+/.test(form.email)) newErrors.email = "Please enter a valid email.";
         if (!isReg) {
             if (!form.name?.trim()) newErrors.name = "Name is required.";
@@ -116,10 +117,10 @@ const Regorg = () => {
     }
 
     const handleFormSubmit = async (e) => {
+        setIsSubmitting(true);
         e.preventDefault();
         // console.log(form, orgName, orgChoice, userType);
         if (validateForm()) {
-
             //prepare data for submission
             if (orgtype === 'New') {
                 const orgData = {
@@ -135,11 +136,11 @@ const Regorg = () => {
                     isReg: isReg,
                     regType: "Organization"
                 }
-                console.log(orgData, userData);
+                // console.log(orgData, userData);
 
                 // register organisation
                 let res = await registerOrg(orgData, userData);
-                console.log(res);
+                // console.log(res);
                 if (res.status == false) {
                     toast.error(res.message || res.error, {
                         position: "top-right",
@@ -177,11 +178,12 @@ const Regorg = () => {
                     isReg: isReg,
                     regType: "Organization"
                 }
-                console.log(userData);
+                // console.log(userData);
                 // register user
                 let res = await addOrgUser(orgName, userData);
-                console.log(res);
+                // console.log(res);
                 if (res.status == false) {
+                    // console.log("a", res.message)
                     toast.error(res.message || res.error, {
                         position: "top-right",
                         autoClose: 3000,
@@ -209,7 +211,7 @@ const Regorg = () => {
                 }
             }
         }
-
+        setIsSubmitting(false);
     }
 
     const handleOrgSubmit = async (e) => {
@@ -222,7 +224,7 @@ const Regorg = () => {
         // Clear any lingering errors if validation passes
         setErrors((prev) => ({ ...prev, orgName: "" }));
         let res = await isValidOrg(orgName, orgChoice);
-        console.log(orgChoice, res);
+        // console.log(orgChoice, res);
         if (res.status == true) {
             setOrgtype(orgChoice);
         }
@@ -236,19 +238,7 @@ const Regorg = () => {
 
     return (
         <>
-        <ToastContainer
-                position="top-right"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                draggablePercent={60}
-                pauseOnHover
-                theme="light"
-              />
+        
             <div className='bg-slate-100 dark:bg-[var(--bg-dark)] p-6 sm:p-10 w-full min-h-[100vh] max-h-[100%] flex flex-col text-neutral-800 dark:text-[#e3e3e3]'>
                 <div className="title border-b-2 rounded border-zinc-300 dark:border-neutral-600">
                     <div className='flex justify-between items-center'>
@@ -289,7 +279,7 @@ const Regorg = () => {
                                         />
                                         <button
                                             type="submit"
-                                            className="bg-[#FF5F1F] bg-opacity-90 text-white py-2 rounded-lg hover:bg-opacity-100 transition shadow-md disabled:opacity-70"
+                                            className="bg-[#FF5F1F] bg-opacity-90 text-white py-2 rounded-lg hover:bg-opacity-100 transition shadow-md disabled:opacity-70 disabled:cursor-not-allowed"
                                             disabled={orgName.trim().length === 0}
                                         >
                                             Submit
@@ -360,13 +350,13 @@ const Regorg = () => {
                                             }
 
                                         </div>
-                                        {userType === 'Admin' ?
+                                        {userType === 'admin' ?
                                             <div className='text-gray-500  dark:text-gray-400 ml-4'>
                                                 <ul>
                                                     <li>Admin can collaborately create, manage quizzes.</li>
                                                     <li>Admin has  </li>
                                                 </ul>
-                                            </div> : userType === 'Student' ?
+                                            </div> : userType === 'student' ?
                                                 <div className='text-gray-500 dark:text-gray-400 ml-4'>
                                                     <ul>
                                                         <li>Student can attempt quizzes from various subjects.</li>
@@ -415,9 +405,7 @@ const Regorg = () => {
                                         </>}
                                 </div>
                             </div>
-                            <div className='flex justify-center'>
-                                <button className='w-full bg-[#FF5F1F] text-white py-2 px-4 rounded-lg hover:bg-[#FF4c00] transition'>Submit</button>
-                            </div>
+                            <button type='submit' className='w-full bg-[#FF5F1F] text-white py-2 px-4 rounded-lg hover:bg-[#FF4c00] transition disabled:opacity-70 disabled:cursor-not-allowed' disabled={isSubmitting}>{isSubmitting?"Submitting...":"Submit"}</button>
                         </form>
                     </div>
                 }

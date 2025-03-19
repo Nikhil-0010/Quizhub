@@ -3,6 +3,8 @@ import Navbar from "@/components/Navbar";
 import SessionWrapper from "@/components/SessionWrapper";
 import { ThemeProvider } from "next-themes";
 import { Suspense } from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -18,6 +20,20 @@ export default function RootLayout({ children }) {
       <body className="text-neutral-800 dark:text-[#e3e3e3]">
         <SessionWrapper>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                draggablePercent={60}
+                pauseOnHover
+                theme="light"
+                style={{zIndex:100}}
+              />
           <div className="  2xl:border-x-2 border-gray-300 dark:border-neutral-700">
           <Navbar />
       {/* <Suspense fallback={<Loading />}> */}
