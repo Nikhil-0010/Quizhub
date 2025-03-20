@@ -78,7 +78,7 @@ const CreateQuiz = () => {
             if (!newErrors[`question_${index}`]) {
                 newErrors[`question_${index}`] = {};
             }
-            newErrors[`question_${index}`].question = `Question ${index + 1} is required`;
+            if (!mcq.question.trim()) newErrors[`question_${index}`].question = `Question ${index + 1} is required`;
             if (!mcq.options.every(opt => opt.trim())) newErrors[`question_${index}`].option = `All options for Q${index + 1} must be filled`;
             if (!mcq.correctAnswer?.trim()) newErrors[`question_${index}`].correctAnswer = `Correct answer for question ${index + 1} is required`;
             if (!mcq.marks || isNaN(Number(mcq.marks)) || Number(mcq.marks) <= 0) {
