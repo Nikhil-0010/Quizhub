@@ -134,7 +134,18 @@ const Regindi = () => {
           </form>
           <div className='hidden md:w-1/2 md:flex items-start text-white justify-center pt-12  pr-5 lg:pr-16 
           '>
-            <div className='bg-[#FF5F1F] w-full min-h-[40%] rounded-lg'>sdasad</div>
+            <div className='bg-[#FF5F1F] intro w-full min-h-[40%] rounded-lg'>
+              <div className='p-6'>
+                <h2 className='text-2xl font-bold mb-4'>Welcome to QuizHub!</h2>
+                <p className='text-sm'>
+                  Join our community and unlock access to exciting quizzes, challenges, and learning opportunities. 
+                  Signing up as an individual allows you to track your progress, compete with others, and enhance your knowledge.
+                </p>
+                <p className='text-sm mt-2'>
+                  Fill out the form to get started and become a part of our growing community today!
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -17,6 +17,7 @@ const Regorg = () => {
     const [form, setForm] = useState({});
     const [isReg, setIsReg] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [orgSelected, setOrgSelected] = useState(false);
 
     const validateForm = () => {
         const newErrors = {};
@@ -227,12 +228,25 @@ const Regorg = () => {
         // console.log(orgChoice, res);
         if (res.status == true) {
             setOrgtype(orgChoice);
+            setOrgSelected(true);
         }
         else if (res.status == false) {
             setErrors((prev) => ({ ...prev, orgName: res.message }));
         }
         else {
             setErrors((prev) => ({ ...prev, orgName: res.error }));
+        }
+    }
+
+    const handleBack = ()=>{
+        if(orgSelected){
+            setOrgtype("");
+            setErrors("");
+            setIsReg(false);
+            setOrgSelected(false);
+        }
+        else{
+            router.push("/signup");
         }
     }
 
@@ -246,7 +260,7 @@ const Regorg = () => {
                             <h1 className="text-3xl font-bold"><span className='text-[#FF4c00]'>S</span>ign Up</h1>
                             <p>in / as <span className='text-[#FF4c00] font-bold'>Organization</span></p>
                         </div>
-                        <button onClick={() => { setOrgtype(""); setErrors(""); setIsReg(false); }} className='bg-[#FF4c00] hover:bg-[#e64400] text-white rounded-md w-25 h-9 px-2 hover:bg-opacity-90'>Go back</button>
+                        <button onClick={() => handleBack()} className='bg-[#FF4c00] hover:bg-[#e64400] text-white rounded-md w-25 h-9 px-2 hover:bg-opacity-90'>Go back</button>
                     </div>
                     <hr className='dark:border-neutral-600' />
                 </div>
