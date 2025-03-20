@@ -97,39 +97,39 @@ const Regindi = () => {
           <form action={handleSubmit(onSubmit)} className='mt-5 md:w-1/2 w-full flex flex-col gap-4 items-center px-2 pl-0 sm:px-5'>
             <div className='w-full'>
               <label className='block mb-1' htmlFor="name">Full Name</label>
-              <input className='rounded-lg dark:border-neutral-700 bg-transparent text-sm w-full border-[1.4px]  hover:border-orange-400 dark:hover:border-orange-500 outline-none border-gray-400 p-2' type="text" {...register("name", { required: { value: true, message: 'Field is required' } })} id='name' placeholder='Your full name' />
-              {errors.name && <p className='text-red-500 ml-2'>{`${errors.name.message}`}</p>}
+              <input className='rounded-md dark:border-neutral-700 bg-transparent text-sm w-full border-[1.4px]  hover:border-orange-400 dark:hover:border-orange-500 outline-none border-gray-400 p-2' type="text" {...register("name", { required: { value: true, message: 'Field is required' } })} id='name' placeholder='Your full name' />
+              {errors.name && <p className='text-red-500 text-xs ml-2'>{`${errors.name.message}`}</p>}
             </div>
             <div className='w-full'>
               <label className='block mb-1' htmlFor="email">Email address</label>
-              <input className='rounded-lg dark:border-neutral-700 bg-transparent text-sm w-full border-[1.4px]  hover:border-orange-400 dark:hover:border-orange-500 outline-none border-gray-400 p-2' type="email" {...register("email", { required: { value: true, message: 'Field is required' } })} id='email' placeholder='Enter your email address' />
-              {errors.email && <p className='text-red-500 ml-2'>{`${errors.email.message}`}</p>}
+              <input className='rounded-md dark:border-neutral-700 bg-transparent text-sm w-full border-[1.4px]  hover:border-orange-400 dark:hover:border-orange-500 outline-none border-gray-400 p-2' type="email" {...register("email", { required: { value: true, message: 'Field is required' } })} id='email' placeholder='Enter your email address' />
+              {errors.email && <p className='text-red-500 text-xs ml-2'>{`${errors.email.message}`}</p>}
             </div>
             <div className='w-full'>
               <label className='block mb-1' htmlFor="phone">Phone</label>
-              <input className='rounded-lg dark:border-neutral-700 bg-transparent text-sm w-full border-[1.4px]  hover:border-orange-400 dark:hover:border-orange-500 outline-none border-gray-400 p-2' type="number" {...register("phone", {
+              <input className='rounded-md dark:border-neutral-700 bg-transparent text-sm w-full border-[1.4px]  hover:border-orange-400 dark:hover:border-orange-500 outline-none border-gray-400 p-2' type="number" {...register("phone", {
                 validate: (value) =>
                   (value.length == 10 || value.length == 0) || "Invalid phone no",
               })} id='phone' placeholder='Enter your phone no' />
-              {errors.phone && <p className='text-red-500 ml-2'>{`${errors.phone.message}`}</p>}
+              {errors.phone && <p className='text-red-500 text-xs ml-2'>{`${errors.phone.message}`}</p>}
             </div>
             <div className='w-full flex sm:flex-row flex-col gap-4 justify-between'>
               <div className='w-full'>
                 <label className='block mb-1' htmlFor="password">Password</label>
-                <input className='rounded-lg dark:border-neutral-700 bg-transparent text-sm w-full border-[1.4px]  hover:border-orange-400 dark:hover:border-orange-500 outline-none border-gray-400 p-2' type="password" {...register("password", { required: { value: true, message: 'Field is required' }, minLength: { value: 8, message: "Password should contain at least 8 characters." }, maxLength: { value: 12, message: "Password should not contain more than 12 characters." } })} id='password' placeholder='Enter password' />
-                {errors.password && <p className='text-red-500 ml-2'>{`${errors.password.message}`}</p>}
+                <input className='rounded-md dark:border-neutral-700 bg-transparent text-sm w-full border-[1.4px]  hover:border-orange-400 dark:hover:border-orange-500 outline-none border-gray-400 p-2' type="password" {...register("password", { required: { value: true, message: 'Field is required' }, minLength: { value: 8, message: "Password should contain at least 8 characters." }, maxLength: { value: 18, message: "Password should not contain more than 18 characters." } })} id='password' placeholder='Enter password' />
+                {errors.password && <p className='text-red-500 text-xs ml-2'>{`${errors.password.message}`}</p>}
               </div>
               <div className='w-full'>
                 <label className='block mb-1' htmlFor="confirmPassword">Confirm Password</label>
-                <input className='rounded-lg dark:border-neutral-700 bg-transparent text-sm w-full border-[1.4px]  hover:border-orange-400 dark:hover:border-orange-500 outline-none border-gray-400 p-2' type="text" {...register("confirmPassword", {
+                <input className='rounded-md dark:border-neutral-700 bg-transparent text-sm w-full border-[1.4px]  hover:border-orange-400 dark:hover:border-orange-500 outline-none border-gray-400 p-2' type="text" {...register("confirmPassword", {
                   required: { value: true, message: 'Field is required' }, validate: (value) =>
                     value === password || "The passwords do not match",
                 })} id='confirmPassword' placeholder='Re enter password' />
-                {errors.confirmPassword && <p className='text-red-500 ml-2'>{`${errors.confirmPassword.message}`}</p>}
+                {errors.confirmPassword && <p className='text-red-500 text-xs ml-2'>{`${errors.confirmPassword.message}`}</p>}
               </div>
             </div>
             <div className='w-full'>
-              <button disabled={isSubmitting} className='bg-[#FF4c00] text-lg w-full h-10 rounded-lg text-white font-bold border-[1.4px] border-[#FF5F1F]'>{isSubmitting ? "Submitting..." : "Submit"} </button>
+              <button disabled={isSubmitting} className='bg-[#FF4c00] text-lg w-full h-10 rounded-md text-white font-semibold border-[1.4px] border-[#FF5F1F] disabled:bg-opacity-80 disabled:cursor-not-allowed'>{isSubmitting ? "Submitting..." : "Submit"} </button>
             </div>
           </form>
           <div className='hidden md:w-1/2 md:flex items-start text-white justify-center pt-12  pr-5 lg:pr-16 
