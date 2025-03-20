@@ -17,6 +17,7 @@ const Regindi = () => {
   const onSubmit = async (data) => {
     // data.regType= searchParams.get("regType");
     data.regType = "Individual";
+    data.email = data.email?.toLowerCase();
     // console.log(data);
     let u = await registerUser(data);
     // console.log(u);

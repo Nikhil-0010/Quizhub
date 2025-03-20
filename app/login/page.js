@@ -21,7 +21,7 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         const res = await signIn("credentials", {
-            email: form.email, password: form.password, redirect: false,
+            email: form.email?.toLowerCase(), password: form.password, redirect: false,
         });
         // console.log(res);
 
