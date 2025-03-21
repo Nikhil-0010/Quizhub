@@ -85,21 +85,20 @@ const CreateQuiz = () => {
                 newErrors[`question_${index}`].marks = `Valid marks for question ${index + 1} are required`;
             }
         });
-        console.log(newErrors);
+        // console.log(newErrors);
         return newErrors;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validateForm();
-        if (Object.keys(validationErrors).length > 0) {
+        
+        if (Object.values(validationErrors).some(error => typeof error === 'object' ? Object.keys(error).length > 0 : error)) {
             setErrors(validationErrors);
             return;
         }
-
+        
         const userId = await getUserId(session.user.email);
-
-
         const quizData = {
             creater: userId,
             title: formData.title.charAt(0).toUpperCase() + formData.title.slice(1).toLowerCase(),

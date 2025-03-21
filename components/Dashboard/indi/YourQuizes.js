@@ -167,7 +167,7 @@ const YourQuizes = () => {
 
     // Handle deleting the quiz
     const handleConfirmDelete = async () => {
-        console.log("Deleting quiz with ID:", selectedQuiz);
+        // console.log("Deleting quiz with ID:", selectedQuiz);
         const res = await deleteQuiz(selectedQuiz);
 
         if (!res.success) {
@@ -706,7 +706,7 @@ const YourQuizes = () => {
                 <div className='flex flex-col md:flex-row w-full h-[calc(calc(91.3vh-64px)-48px)] overflow-auto gap-6 2xl:gap-18'>
                     <div className={`subjects w-full md:max-w-[25%] lg:max-w-[25%] min-h-[30%] md:min-h-[50%]  p-4 py-8 flex flex-col overflow-auto transition ease-in-out delay-100 duration-[700ms] ${loading ? "border-t-2 border-transparent" : "border-y-2 border-[#ff5f1f] shadow-[inset_0px_5px_12px_-6px_rgb(255,95,31)] bg-neutral-100 dark:bg-zinc-900"} rounded-lg `}>
                         {/* {loading && <div>Loading...</div>} */}
-                        {!loading && quizzes.length === 0 && <div className='font-semibold text-stone-800 dark:text-[#e3e3e3]'>No quizzes created yet!</div>}
+                        {!loading && quizzes.length === 0 && <div className='text-center text-stone-800 dark:text-[#e3e3e3]'>No quizzes created yet!</div>}
                         <div className={`relative -top-6 bg-transparent w-full text-center pt-1 h-fit border-b-[1.4px] border-gray-300 dark:border-neutral-600 ${loading || quizzes.length === 0 ? "hidden" : "visible"} `}>Subjects</div>
                         <ul className='w-full flex flex-col gap-2'>
                             {quizzes.length > 0 && !loading && (<>
@@ -719,8 +719,7 @@ const YourQuizes = () => {
                                     <div className="subject text-sm font-semibold">All</div>
                                     <div className={`count text-xs ${selectedSub === "All" ? "text-gray-200" : "text-gray-400"} `}>{quizzes.length} {quizzes.length > 1 ? "Quizzes" : "Quiz"}</div>
                                 </motion.li>
-                            </>
-                            )}
+                            
                             {subjects.sort().map((subject, index) => (
                                 <motion.li
                                     key={index}
@@ -734,11 +733,13 @@ const YourQuizes = () => {
                                     <div className={`count text-xs ${selectedSub == subject ? "text-gray-200" : "text-gray-400"}`}>{quizzes.filter((quiz) => quiz.subject === subject).length} {quizzes.filter((quiz) => quiz.subject === subject).length > 1 ? "Quizzes" : "Quiz"} </div>
                                 </motion.li>
                             ))}
+                            </>
+                            )}
                         </ul>
                     </div>
                     <AnimatePresence mode='popLayout' >
                         <div className={`quizes w-full md:w-[80%] min-h-[30%] md:min-h-[50%] p-4 py-8  flex overflow-auto gap-6 flex-wrap justify-around xl:justify-center xl:gap-20 transition ease-in-out delay-100 duration-[700ms] ${loading ? "border-t-2 border-transparent" : "border-y-2 border-[#ff5f1f] shadow-[inset_0px_5px_12px_-6px_rgb(255,95,31)] bg-neutral-100 dark:bg-zinc-900"} rounded-lg`}>
-                            {quizzes.length === 0 && !loading && <div className='font-semibold text-stone-800 dark:text-[#e3e3e3]'>No quizzes created yet!</div>}
+                            {quizzes.length === 0 && !loading && <div className='text-stone-800 dark:text-[#e3e3e3]'>No quizzes created yet!</div>}
                             {quizzes
                                 .filter((quiz) => selectedSub === "All" || quiz.subject === selectedSub)
                                 .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))

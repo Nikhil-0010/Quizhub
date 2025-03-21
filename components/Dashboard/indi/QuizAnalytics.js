@@ -98,7 +98,7 @@ const QuizAnalytics = () => {
                   </div>
                   </>)}
 
-                {quizzes.length === 0 && !loading && <p className="text-lg dark:text-gray-200 text-gray-700">No quizzes available.</p>}
+                {quizzes.length === 0 && !loading && <p className="text-lg text-center dark:text-gray-200 text-gray-700">No quizzes available.</p>}
 
                 <div
                   className={`transition-all duration-500 ${analytics ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
