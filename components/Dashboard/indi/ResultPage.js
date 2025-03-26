@@ -64,6 +64,7 @@ const ResultPage = ({ quizId, userEmail }) => {
         });
 
         socket.on('leaderboardUpdate', (updatedBoard) => {
+            setLoading(true);
             setLeaderboard((prevLeaderboard) => {
                 return [...updatedBoard].slice(0, 10);
             });
@@ -71,6 +72,7 @@ const ResultPage = ({ quizId, userEmail }) => {
             const userRankData = updatedBoard.findIndex(user => user.userEmail === userEmail.toLowerCase());
             // console.log(userRankData);
             setUserRank(userRankData !== -1 ? userRankData + 1 : updatedBoard.length + 1);
+            setLoading(false);
         })
 
         return () => {
