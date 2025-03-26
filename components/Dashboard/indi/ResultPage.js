@@ -10,6 +10,7 @@ const ResultPage = ({ quizId, userEmail }) => {
     const [userRank, setUserRank] = useState(null);
     const [feedback, setFeedback] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadingMsg, setLoadingMsg] = useState('Connecting to server ');
 
     useEffect(() => {
         // Fetch the quiz attempt result for the user
@@ -39,14 +40,22 @@ const ResultPage = ({ quizId, userEmail }) => {
         const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL, {
             query: { quizId },
             transports: ['websocket'],
+            reconnectionAttempts: 5, // Limit reconnection attempts to 5
+            reconnectionDelay: 4000, // Start with 4 second delay
+            reconnectionDelayMax: 16000, // Maximum delay of 16 seconds
+        });
+
+        let attempt = 1;
+        socket.on('connect_error', () => {
+            setLoading(true);
+            setLoadingMsg("Error connecting to server, retrying ");
+            if (attempt == 5) {
+                setLoading(false);
+            }
+            attempt++;
         });
 
         socket.on('connect', () => {
-            setLoading(false);
-        });
-
-        socket.on('connect_error', (error) => {
-            console.error('Connection error:', error);
             setLoading(false);
         });
 
@@ -58,9 +67,9 @@ const ResultPage = ({ quizId, userEmail }) => {
             setLeaderboard((prevLeaderboard) => {
                 return [...updatedBoard].slice(0, 10);
             });
-            console.log("leaderboard updated ", updatedBoard, leaderboard);
+            // console.log("leaderboard updated ", updatedBoard, leaderboard);
             const userRankData = updatedBoard.findIndex(user => user.userEmail === userEmail.toLowerCase());
-            console.log(userRankData);
+            // console.log(userRankData);
             setUserRank(userRankData !== -1 ? userRankData + 1 : updatedBoard.length + 1);
         })
 
@@ -105,7 +114,12 @@ const ResultPage = ({ quizId, userEmail }) => {
                     <h3 className="text-xl font-semibold text-center text-[#FF5F1F] mb-4 animate-fade-in-down">
                         Leaderboard
                     </h3>
-                    {loading && <p className='text-center'>Connecting to server ...</p>}
+                    {loading && (
+                        <div className="flex items-center justify-center gap-3">
+                            {loadingMsg}
+                            <div className="animate-spin rounded-full h-6 w-6 border-t-[3px] border-[#FF5F1F]"></div>
+                        </div>
+                    )}
                     {!loading && leaderboard.length > 0 && (
                         <div className="overflow-x-auto rounded ">
                             <table className="min-w-full border dark:border-neutral-700 rounded table-auto text-sm">
@@ -151,7 +165,7 @@ const ResultPage = ({ quizId, userEmail }) => {
                             </table>
                         </div>
                     )}
-                    {!loading && leaderboard.length === 0 && <p>Error connecting to server</p>}
+                    {!loading && leaderboard.length === 0 && <p className='text-center'>Connection to server failed 😐</p>}
 
                 </div>
 

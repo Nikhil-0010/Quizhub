@@ -53,6 +53,10 @@ const YourQuizes = () => {
         if (session?.user?.email) {
             const userId = await getUserId(session.user.email);
             const quizes = await fetchQuizInfo(userId);
+            const today = new Date();
+            quizes.forEach((quiz)=>{
+                quiz.isActive = quiz.endDate ? new Date(quiz.endDate) > today : true;
+            })
             setQuizzes([...quizes]);
             // seperate the different subjects
             let subjects = [];
@@ -758,12 +762,13 @@ const YourQuizes = () => {
                                         <div className="cover h-3/4 rounded-t-lg">
                                             <img src={null} alt='Quiz cover' className="image w-full h-full border-b-2 border-transparent" />
                                         </div>
-                                        <div className="data text-sm h-1/4 rounded-b-lg flex flex-col dark:bg-neutral-900 bg-neutral-50 pl-2 pt-2">
+                                        <div className="data text-sm h-1/4 rounded-b-lg flex flex-col dark:bg-neutral-900 bg-neutral-50 p-2">
                                             <div className="title flex items-center gap-2">
                                                 <span className='font-bold'>{quiz.title}</span>•<span>{quiz.subject}</span>
                                             </div>
-                                            <div className="date text-xs text-gray-400">
+                                            <div className="date text-xs text-gray-400 flex items-center gap-1">
                                                 {quiz?.createdAt?.toLocaleString('en-IN').split(",")[0]}
+                                                <span className={`font-semibold ${quiz?.isActive?"text-green-500":"text-red-500"}`} >{quiz?.isActive?"• Active":"• Expired"}</span>
                                             </div>
                                         </div>
                                     </motion.div>

@@ -51,7 +51,7 @@ const sanitizeQuizzes = async (quizzes) => {
 
 export const fetchQuizInfo = async (userId) => {
   await connectDB();
-  const quizzes = await Quiz.find({ creater: userId }).select('quizId title subject createdAt');
+  const quizzes = await Quiz.find({ creater: userId }).select('quizId title subject createdAt endDate').exec();
   const sanitizedQuizzes = await sanitizeQuizzes(quizzes);
   // console.log(sanitizedQuizzes);
   return sanitizedQuizzes;
