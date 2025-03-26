@@ -322,9 +322,13 @@ const YourQuizes = () => {
                 });
                 // update only the updated quiz data in quizzes
                 let updatedQuizzes = [...quizzes];
-                let index = updatedQuizzes.findIndex((quiz) => quiz._id === selectedQuiz);
+                if (res?.data) {
+                    res.data.isActive = res.data.endDate ? new Date(res.data.endDate) > today : true;
+                }
+                let index = updatedQuizzes.findIndex((quiz) => quiz.quizId === selectedQuiz);
                 updatedQuizzes[index] = { ...updatedQuizzes[index], ...res.data };
                 setQuizzes(updatedQuizzes);
+                
             }
             else {
                 toast.error(res.message, {

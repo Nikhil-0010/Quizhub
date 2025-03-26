@@ -266,8 +266,8 @@ const Regorg = () => {
                 </div>
 
                 {orgtype.length == 0 &&
-                    <div className='flex mt-16 justify-center  items-center h-full'>
-                        <div className="bg-white dark:border dark:border-neutral-600 dark:bg-neutral-800 dark:shadow-neutral-900 shadow-lg rounded-xl p-8 w-full max-w-md">
+                    <div className='flex pt-10 justify-center  items-center min-h-[60vh]'>
+                        <div className="bg-white dark:border dark:border-neutral-600 dark:bg-neutral-800 dark:shadow-neutral-900 shadow-lg rounded-xl p-8 px-2 md:p-8 w-full max-w-xl">
                             <h3 className="text-2xl font-bold text-center text-[#FF5F1F] mb-4">Choose Organization</h3>
                             <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
                                 Select one of the option.
@@ -306,7 +306,7 @@ const Regorg = () => {
                     </div>}
 
                 {orgtype.length > 0 &&
-                    <div className='w-full md:w-[70%] 2xl:max-w-[50%] md:mx-auto'>
+                    <div className='w-full lg:pt-4 md:w-[70%] 2xl:max-w-[50%] md:mx-auto'>
                         <form onSubmit={handleFormSubmit} className='mt-5 shadow-md bg-gray-100 dark:bg-neutral-800  dark:shadow-zinc-900 border border-gray-300 dark:border-neutral-700 rounded px-4 py-6 md:px-8 flex flex-col gap-6'>
                             {/* Organization details */}
                             <div id='org' className='org'>

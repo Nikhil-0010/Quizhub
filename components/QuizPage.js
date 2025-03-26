@@ -187,8 +187,8 @@ const QuizAttemptPage = ({ quizData }) => {
                 theme="light"
                 toastStyle={{ background: "#FF5F1F", width: "100%" }}
             />
-            <div className="flex flex-col items-center  text-neutral-800 dark:text-[#e3e3e3]  px-5 py-10 sm:p-10 min-h-screen dark:from-zinc-800 dark:to-zinc-900 bg-gradient-to-b from-orange-100 to-orange-300">
-                <div className="bg-white dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:shadow-zinc-900 shadow-lg rounded-xl p-8 w-full max-w-md">
+            <div className="flex flex-col items-center justify-center text-neutral-800 dark:text-[#e3e3e3]  px-5 py-10 sm:p-10 min-h-screen dark:from-zinc-800 dark:to-zinc-900 bg-gradient-to-b from-orange-100 to-orange-300">
+                <div className="bg-white dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:shadow-zinc-900 shadow-lg rounded-xl p-8 w-full max-w-xl">
                     <h3 className="text-2xl font-bold text-center text-[#FF5F1F] mb-4">{quizData.title}</h3>
                     <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
                         Enter your email to start attempting the quiz.

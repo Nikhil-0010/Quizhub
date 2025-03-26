@@ -55,9 +55,9 @@ const ResultPage = ({ quizId, userEmail }) => {
             attempt++;
         });
 
-        // socket.on('connect', () => {
-        //     setLoading(false);
-        // });
+        socket.on('connect', () => {
+            setLoadingMsg("Connected");
+        });
 
         socket.on('connecting', () => {
             setLoading(true);
