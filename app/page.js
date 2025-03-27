@@ -6,7 +6,7 @@ import * as motion from "motion/react-client";
 export default function Home() {
   return (
     <>
-      <section id="home" className=" min-h-[calc(100vh-36px)] max-h-screen flex flex-col justify-center items-center text-center relative w-full  dark:bg-gray-800 dark:text-white  bg-slate-100 p-10 overflow-hidden" >
+      <section id="home" className=" h-[calc(100vh-36px)] min-h-fit max-h-screen flex flex-col justify-center items-center text-center relative w-full  dark:bg-gray-800 dark:text-white  bg-slate-100 p-10 overflow-hidden" >
       <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -27,13 +27,13 @@ export default function Home() {
       </section>
 
 {/* Γ£à FEATURES SECTION */}
-<section className="bg-white flex justify-center items-center h-screen dark:bg-gray-900 text-gray-900 dark:text-white py-20 px-10">
+<section className="bg-white flex min-h-fit justify-center items-center h-screen dark:bg-gray-900 text-gray-900 dark:text-white py-20 px-10">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-4xl  font-bold text-[#FF5F1F]">Why Choose Quizhub?</h2>
           <p className="mt-4 text-lg text-gray-700 dark:text-gray-300">
             A powerful platform for educators, students, and individuals.
           </p>
-          <div className="grid md:grid-cols-3 gap-10 mt-20">
+          <div className="grid lg:grid-cols-3  gap-10 mt-20">
             {[
               { title: "Easy Quiz Creation", desc: "Create quizzes in minutes with an intuitive interface." },
               { title: "Real-time Analytics", desc: "Track progress and gain insights instantly." },
@@ -55,7 +55,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="h-screen bg-stone-800 dark:border-y dark:border-slate-200 text-white overflow-hidden py-20 px-10 ">
+      <section className="h-screen min-h-fit bg-stone-800 dark:border-y dark:border-slate-200 text-white overflow-hidden py-20 px-10 ">
         <div className="flex flex-row-reverse mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, transform: 'translateX(80px)' }}
@@ -71,7 +71,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="h-screen text-[#FF5F1F] dark:bg-gray-800 bg-slate-100 bg-white overflow-hidden p-10">
+      <section className="h-screen min-h-fit text-[#FF5F1F] dark:bg-gray-800 bg-slate-100 bg-white overflow-hidden p-10">
         <div className="flex mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, transform: 'translateX(-80px)' }}
