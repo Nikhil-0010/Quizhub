@@ -1,20 +1,21 @@
 "use client"
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import * as motion from "motion/react-client";
 
 export default function Home() {
   return (
     <>
       <section id="home" className=" h-[calc(100vh-36px)] min-h-fit max-h-screen flex flex-col justify-center items-center text-center relative w-full  dark:bg-gray-800 dark:text-white  bg-slate-100 p-10 overflow-hidden" >
-      <motion.div
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
           className="flex flex-col gap-4 sm:w-3/5"
         >
-            <h1 className="font-bold text-5xl text-[#FF5F1F] sm:text-7xl">Quizhub</h1>
-            <p className="text-lg dark:text-inherit text-stone-800 md:text-xl 2xl:text-2xl">Create, manage and analyse the quizzes.</p>
+          <h1 className="font-bold text-5xl text-[#FF5F1F] sm:text-7xl">Quizhub</h1>
+          <p className="text-lg dark:text-inherit text-stone-800 md:text-xl 2xl:text-2xl">Create, manage and analyse the quizzes.</p>
           <div className="flex gap-3 justify-center">
             <Link href={'/signup'}>
               <button className="text-white bg-[#FF4c00] hover:bg-[#e64400] slideFlSlow transition-all duration-300  h-10 px-4 md:h-11 md:px-6 xl:text-lg py-2 rounded-lg">Get Started</button>
@@ -26,8 +27,8 @@ export default function Home() {
         <div className="min-h-48 w-48 clip-rightTriangle bg-[#FF5F1F] absolute bottom-0 right-0 slide-in-right-slf"></div>
       </section>
 
-{/* Γ£à FEATURES SECTION */}
-<section className="bg-white flex min-h-fit justify-center items-center h-screen dark:bg-gray-900 text-gray-900 dark:text-white py-20 px-10">
+      {/* Γ£à FEATURES SECTION */}
+      <section className="bg-white flex min-h-fit justify-center items-center h-screen dark:bg-gray-900 text-gray-900 dark:text-white py-20 px-10">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-4xl  font-bold text-[#FF5F1F]">Why Choose Quizhub?</h2>
           <p className="mt-4 text-lg text-gray-700 dark:text-gray-300">
@@ -56,35 +57,55 @@ export default function Home() {
       </section>
 
       <section className="h-screen min-h-fit bg-stone-800 dark:border-y dark:border-slate-200 text-white overflow-hidden py-20 px-10 ">
-        <div className="flex flex-row-reverse mx-auto max-w-7xl">
+        <div className="flex flex-col-reverse gap-6 lg:flex-row-reverse mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, transform: 'translateX(80px)' }}
             whileInView={{ opacity: 1, transform: 'translateX(0)' }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }} 
-            className="flex flex-col gap-6 lg:w-3/5 2xl:w-2/5 mt-10 sm:pl-10">
-            <h1 className="font-bold text-4xl md:text-5xl border-b-4 border-[#fe6d2f] rounded-sm w-fit"><span className="text-[#fe6d2f]">F</span>or the institute</h1>
+            viewport={{ once: true }}
+            className="flex flex-col gap-6 h-1/2 lg:full lg:w-3/5 2xl:w-2/5 mt-10 sm:pl-10">
+            <h1 className="font-bold text-4xl md:text-5xl relative rounded-sm w-fit
+              after:rounded-b-sm after:content-[' '] after:w-full after:absolute after:left-0 after:bottom-[-1px] after:h-[3px] after:bg-gradient-to-r after:from-[#FF5F1F] after:to-[#ffaf8f]
+            ">
+              <span className="text-[#FF5F1F]">F</span>or the institute
+              </h1>
             <p className="md:text-lg">Manage quizzes for large teams or groups.
               <br />
               Generate aggregated analytics to understand group performance and identify areas for improvement.</p>
           </motion.div>
+          <div className="flex relative items-center h-1/2 lg:h-full justify-center lg:w-2/5 2xl:w-3/5 md:mt-10">
+          <div className="relative w-full max-w-[480px] lg:max-w-[640px] aspect-[16/10]">
+              <div className="w-full rounded-xl rotate-6 shadow-md top-2 left-4 z-0 max-w-[640px] max-h-[400px] absolute bg-white h-full" ></div>
+              <div className="w-full rounded-xl -rotate-[5deg] shadow-md z-0 top-2 left-2 max-w-[640px] max-h-[400px] absolute bg-white h-full" ></div>
+            <Image src={"/institute-cmp.png"} fill alt="insitute image" className="rounded-xl shadow-xl  z-10 relative" />
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="h-screen min-h-fit text-[#FF5F1F] dark:bg-gray-800 bg-slate-100 bg-white overflow-hidden p-10">
-        <div className="flex mx-auto max-w-7xl">
+      <section className="h-screen min-h-fit text-[#FF5F1F] dark:bg-gray-800 bg-slate-100 bg-white overflow-hidden py-20 px-10">
+        <div className="flex flex-col-reverse gap-6 lg:flex-row mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, transform: 'translateX(-80px)' }}
-            whileInView={{ opacity: 1, transform: 'translateX(0)'}}
+            whileInView={{ opacity: 1, transform: 'translateX(0)' }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }} 
-            className="flex flex-col gap-6 lg:w-3/5 2xl:w-2/5 mt-10 sm:pl-10">
-            <h1 className="font-bold text-4xl md:text-5xl border-b-4 border-stone-800 dark:border-[#e3e3e3] rounded-sm w-fit">For the individual</h1>
+            viewport={{ once: true }}
+            className="flex flex-col gap-6 h-1/2 lg:h-full lg:w-3/5 2xl:w-2/5 mt-10 sm:pl-10">
+            <h1 className="font-bold text-4xl md:text-5xl rounded-sm w-fit relative
+              after:rounded-b-sm after:content-[' '] after:w-full after:absolute after:left-0 after:bottom-[-1px] after:h-[3px] after:bg-gradient-to-r after:to-[#FF5F1F] after:from-[#ffaf8f]
+            ">For the individual</h1>
             <p className="md:text-lg dark:text-[#e3e3e3]">Personalize quizzes for self-learning, practice, or small-scale projects.
               <br />
               Track individual performance through detailed analytics.
-               </p>
+            </p>
           </motion.div>
+          <div className="flex relative items-center h-1/2 lg:h-full justify-center lg:w-2/5 2xl:w-3/5 md:mt-10">
+          <div className="relative w-full max-w-[480px] lg:max-w-[640px] aspect-[16/10]">
+              <div className="w-full rounded-xl rotate-6 shadow-md top-2 left-4 z-0 max-w-[640px] max-h-[400px] absolute bg-white h-full" ></div>
+              <div className="w-full rounded-xl -rotate-[5deg] shadow-md z-0 top-2 left-2 max-w-[640px] max-h-[400px] absolute bg-white h-full" ></div>
+            <Image src={"/individual-cmp.png"} fill alt="insitute image" className="rounded-xl shadow-xl  z-10 relative" />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -97,17 +118,17 @@ export default function Home() {
           className="max-w-3xl mx-auto"
           viewport={{ once: true }}
         >
-        <h2 className="text-3xl md:text-4xl font-bold">Get Started with Quizhub Today</h2>
-        <p className="mt-4 md:text-lg">Sign up now and create your first quiz in minutes.</p>
-        <Link href="/signup">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-6 bg-white text-[#FF5F1F] px-6 py-3 rounded-lg font-bold text-lg hover:bg-gray-200 transition-all duration-75 ease-out"
-          >
-            Sign Up for Free
-          </motion.button>
-        </Link>
+          <h2 className="text-3xl md:text-4xl font-bold">Get Started with Quizhub Today</h2>
+          <p className="mt-4 md:text-lg">Sign up now and create your first quiz in minutes.</p>
+          <Link href="/signup">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="mt-6 bg-white text-[#FF5F1F] px-6 py-3 rounded-lg font-bold text-lg hover:bg-gray-200 transition-all duration-75 ease-out"
+            >
+              Sign Up for Free
+            </motion.button>
+          </Link>
         </motion.div>
       </section>
     </>

@@ -135,3 +135,10 @@ body {
 .animate-slide-in {
   animation: slideInFromRight 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
+
+.btn-gradient-2 {
+  background: linear-gradient(#292524, #292524) padding-box,
+              linear-gradient(to right, #FF5F1F, #ff8f62) border-box;
+  border-radius: 2px;
+  border-bottom: 4px solid transparent;
+}
