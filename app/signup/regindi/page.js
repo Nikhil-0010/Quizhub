@@ -14,6 +14,8 @@ const Regindi = () => {
 
   // console.log(searchParams.get("regType"));
 
+  const [show, setShow] = useState(false);
+
   const onSubmit = async (data) => {
     // data.regType= searchParams.get("regType");
     data.regType = "Individual";
@@ -21,7 +23,7 @@ const Regindi = () => {
     // console.log(data);
     let u = await registerUser(data);
     // console.log(u);
-    if (u.status==true) {
+    if (u.status == true) {
       toast.success(u.message, {
         position: "top-right",
         autoClose: 3000,
@@ -117,7 +119,15 @@ const Regindi = () => {
             <div className='w-full flex sm:flex-row flex-col gap-4 justify-between'>
               <div className='w-full'>
                 <label className='block mb-1' htmlFor="password">Password</label>
-                <input className='rounded-md dark:border-neutral-700 bg-transparent text-sm w-full border-[1.4px]  hover:border-orange-400 dark:hover:border-orange-500 outline-none border-gray-400 p-2' type="password" {...register("password", { required: { value: true, message: 'Field is required' }, minLength: { value: 8, message: "Password should contain at least 8 characters." }, maxLength: { value: 18, message: "Password should not contain more than 18 characters." } })} id='password' placeholder='Enter password' />
+                <div className='relative'>
+                  <input className='rounded-md dark:border-neutral-700 bg-transparent text-sm w-full border-[1.4px]  hover:border-orange-400 dark:hover:border-orange-500 outline-none border-gray-400 p-2 pr-9 ' type={show?"text":"password"} {...register("password", { required: { value: true, message: 'Field is required' }, minLength: { value: 8, message: "Password should contain at least 8 characters." }, maxLength: { value: 18, message: "Password should not contain more than 18 characters." } })} id='password' placeholder='Enter password' />
+                  <div onClick={() => { setShow(!show) }} className='absolute right-0 rounded-r-md bg-transparent flex items-center justify-center -translate-y-[98%] w-fit p-2 cursor-pointer'>
+                    {show !== true ?
+                      (<svg className="eye-close" width="22px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g > <path d="M4 10C4 10 5.6 15 12 15M12 15C18.4 15 20 10 20 10M12 15V18M18 17L16 14.5M6 17L8 14.5" className='dark:stroke-gray-300' stroke="#464455" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>) : (
+                        <svg className="eye-open" width="22px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g > <path d="M4 12C4 12 5.6 7 12 7M12 7C18.4 7 20 12 20 12M12 7V4M18 5L16 7.5M6 5L8 7.5M15 13C15 14.6569 13.6569 16 12 16C10.3431 16 9 14.6569 9 13C9 11.3431 10.3431 10 12 10C13.6569 10 15 11.3431 15 13Z" className='dark:stroke-gray-300' stroke="#464455" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>)
+                    }
+                  </div>
+                </div>
                 {errors.password && <p className='text-red-500 text-xs ml-2'>{`${errors.password.message}`}</p>}
               </div>
               <div className='w-full'>
@@ -139,7 +149,7 @@ const Regindi = () => {
               <div className='p-6'>
                 <h2 className='text-2xl font-bold mb-4'>Welcome to QuizHub!</h2>
                 <p className='text-sm'>
-                  Join our community and unlock access to exciting quizzes, challenges, and learning opportunities. 
+                  Join our community and unlock access to exciting quizzes, challenges, and learning opportunities.
                   Signing up as an individual allows you to track your progress, compete with others, and enhance your knowledge.
                 </p>
                 <p className='text-sm mt-2'>

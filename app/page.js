@@ -7,28 +7,28 @@ import * as motion from "motion/react-client";
 export default function Home() {
   return (
     <>
-      <section id="home" className=" h-[calc(100vh-36px)] min-h-fit max-h-screen flex flex-col justify-center items-center text-center relative w-full  dark:bg-gray-800 dark:text-white  bg-slate-100 p-10 overflow-hidden" >
+      <section id="home" className=" h-[calc(100vh-36px)] min-h-fit max-h-screen flex flex-col justify-center items-center text-center relative w-full  dark:bg-[var(--bg-dark)] dark:text-white  bg-slate-100 p-10 overflow-hidden" >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="flex flex-col gap-4 sm:w-3/5"
+          className="flex flex-col sm:w-3/5"
         >
           <h1 className="font-bold text-5xl text-[#FF5F1F] sm:text-7xl">Quizhub</h1>
-          <p className="text-lg dark:text-inherit text-stone-800 md:text-xl 2xl:text-2xl">Create, manage and analyse the quizzes.</p>
-          <div className="flex gap-3 justify-center">
+          <p className="text-lg dark:text-inherit text-stone-800 md:text-xl 2xl:text-2xl leading-tight">Create, manage and analyse the quizzes.</p>
+          <div className="mt-4 flex gap-3 justify-center">
             <Link href={'/signup'}>
               <button className="text-white bg-[#FF4c00] hover:bg-[#e64400] slideFlSlow transition-all duration-300  h-10 px-4 md:h-11 md:px-6 xl:text-lg py-2 rounded-lg">Get Started</button>
             </Link>
             {/* <button className="bg-white w-20 h-10 px-4 py-2 rounded-lg">btn2</button> */}
           </div>
         </motion.div>
-        <div className="min-h-52 w-52 clip-rightTriangle bg-slate-300 absolute bottom-0 right-0 slide-in-right-fast"></div>
+        <div className="min-h-52 w-52 clip-rightTriangle bg-slate-300 dark:bg-opacity-30 absolute bottom-0 right-0 slide-in-right-fast"></div>
         <div className="min-h-48 w-48 clip-rightTriangle bg-[#FF5F1F] absolute bottom-0 right-0 slide-in-right-slf"></div>
       </section>
 
       {/* Γ£à FEATURES SECTION */}
-      <section className="bg-white flex min-h-fit justify-center items-center h-screen dark:bg-gray-900 text-gray-900 dark:text-white py-20 px-10">
+      <section className="bg-white flex min-h-fit justify-center items-center h-screen dark:bg-gray-800 -gray-900 dark:text-white py-20 px-10">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-4xl  font-bold text-[#FF5F1F]">Why Choose Quizhub?</h2>
           <p className="mt-4 text-lg text-gray-700 dark:text-gray-300">
@@ -46,7 +46,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.2 }}
                 viewport={{ once: true }}
-                className="p-6 rounded-lg bg-gray-100 dark:bg-gray-800 shadow-md"
+                className="p-6 rounded-lg bg-gray-100 dark:bg-gray-700 shadow-md"
               >
                 <h3 className="text-xl font-semibold">{feature.title}</h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-300">{feature.desc}</p>
@@ -56,7 +56,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="h-screen min-h-fit bg-stone-800 dark:border-y dark:border-slate-200 text-white overflow-hidden py-20 px-10 ">
+      <section className="h-screen min-h-fit bg-[var(--bg-dark)] text-white overflow-hidden py-20 px-10 ">
         <div className="flex flex-col-reverse gap-6 lg:flex-row-reverse mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, transform: 'translateX(80px)' }}

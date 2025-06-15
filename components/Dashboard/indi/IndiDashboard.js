@@ -99,7 +99,7 @@ const IndiDashboard = ({ resetDash }) => {
       <div className='h-[calc(100vh-53px)]  sm:max-h-[calc(100vh-36px)] w-full flex text-neutral-800 bg-white dark:bg-[var(--bg-dark)] dark:text-[#e3e3e3]'>
         {/* main container */}
         <div className='h-full w-full flex flex-col'>
-          <div className='h-14 flex justify-between items-center border-b-2 border-zinc-300 dark:border-neutral-700 px-4 '>
+          <div className='h-14 flex justify-between items-center border-b-2 border-zinc-300 dark:border-neutral-600 px-4 '>
             <div className="title">
               <h2 className='sm:text-3xl text-xl font-bold font-serif' >Welcome, <span className='text-[#FF4c00]'>{session?.user?.name}</span></h2>
             </div>
@@ -111,9 +111,9 @@ const IndiDashboard = ({ resetDash }) => {
             )}
           </div>
           <div className="main-section h-[calc(91.3vh-64px)] ">
-            <div className={`menu relative h-12 flex bg-[#FF5F1F] text-white p-3 pb-0 border-b-2 border-zinc-50 dark:border-zinc-800 gap-2 sm:gap-4`}>
+            <div className={`menu relative h-12 flex bg-[#FF5F1F] text-white p-3 pb-0 border-b-2 border-zinc-50 dark:border-[var(--bg-dark)] gap-2 sm:gap-4`}>
               <motion.div
-                className="absolute bottom-0 left-0 bg-white  dark:bg-[var(--bg-dark)] rounded-t-lg shadow-md"
+                className="absolute bottom-0 left-0 bg-white  dark:bg-[var(--bg-dark)] rounded-t-lg shadow-md dark:shadow-neutral-950"
                 animate={{
                   left: tabPositions.left,
                   width: tabPositions.width,

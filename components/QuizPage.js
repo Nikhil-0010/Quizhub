@@ -230,8 +230,8 @@ const QuizAttemptPage = ({ quizData }) => {
                 theme="light"
                 toastStyle={{ background: "#FF5F1F" }}
             />
-            <div className="min-h-screen text-neutral-800 dark:text-[#e3e3e3]  bg-gradient-to-b from-gray-200 to-gray-300  dark:from-zinc-800 dark:to-zinc-900 sm:p-6">
-                <div className="bg-white relative dark:bg-zinc-900 border border-zinc-300 dark:border-neutral-700  shadow-xl dark:shadow-neutral-950 rounded-lg max-w-4xl mx-auto p-8">
+            <div className="min-h-screen text-neutral-800 dark:text-[#e3e3e3]  bg-gradient-to-b from-gray-200 to-gray-300  dark:from-zinc-800 dark:to-[var(--bg-dark)] sm:p-6">
+                <div className="bg-white relative dark:bg-neutral-800 border border-zinc-300 dark:border-neutral-700  shadow-xl dark:shadow-neutral-950 rounded-lg max-w-4xl mx-auto p-8">
                     <h3 className="text-2xl font-bold text-center text-[#FF5F1F] mb-6">{quizData.title}</h3>
                     {/* Progress Bar */}
                     <div className="mb-6 sticky top-16 bg-white dark:bg-inherit p-4 rounded-lg dark:shadow-zinc-950 shadow-md border dark:border-neutral-700 border-gray-200 z-10">

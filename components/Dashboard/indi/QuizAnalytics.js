@@ -13,6 +13,7 @@ const QuizAnalytics = () => {
   const [selectedQuiz, setSelectedQuiz] = useState(null); // Store selected quiz
   const [analytics, setAnalytics] = useState(null); // Store quiz analytics
   const [loading, setLoading] = useState(false); // Loading state
+  const [refresh, setRefresh] = useState(false);
   const [showAll, setShowAll] = useState(false); // Toggle for leaderboard view
 
   useEffect(() => {
@@ -62,7 +63,7 @@ const QuizAnalytics = () => {
   return (
     <div className="sm:px-3 text-neutral-800 dark:text-[#e3e3e3]">
       <h1 className="text-2xl font-bold text-center mb-6">Quiz Analytics</h1>
-      <div className="p-4 sm:p-6 rounded bg-stone-200 bg-opacity-40 dark:bg-neutral-800 dark:border-neutral-700 border border-gray-200">
+      <div className="p-4 sm:p-6 rounded bg-stone-200 bg-opacity-70 dark:bg-neutral-800 dark:border-neutral-700 border border-gray-300">
         {loading ? (<Loading content={"Fetching quiz info..."} />) : (
           <>
             {/* Quiz Selection */}
@@ -152,8 +153,8 @@ const QuizAnalytics = () => {
                               {showAll ? "Show Less" : "Show All"}
                               </button>
                             )}
-                            <button onClick={() => { setLoading(true); fetchAnalytics(selectedQuiz).finally(() => setLoading(false)); }} className=" bg-[#FF5F1f] text-white text-sm px-4 py-2 rounded hover:bg-[#E5541C] transition">
-                              {loading ? "Refreshing..." : "Refresh"}
+                            <button onClick={() => { setRefresh(true); fetchAnalytics(selectedQuiz).finally(() => setRefresh(false)); }} className=" bg-[#FF5F1f] text-white text-sm px-4 py-2 rounded hover:bg-[#E5541C] transition">
+                              {refresh ? "Refreshing..." : "Refresh"}
                             </button>
                             </div>
                           </>

@@ -712,7 +712,7 @@ const YourQuizes = () => {
                 <h3 className='text-2xl text-neutral-800 dark:text-[#e3e3e3] text-center font-bold '>Your Quizzes</h3>
                 {loading && <Loading content={"Fetching your quizzes..."} />}
                 <div className='flex flex-col md:flex-row w-full h-[calc(calc(91.3vh-64px)-48px)] overflow-auto gap-6 2xl:gap-18'>
-                    <div className={`subjects w-full md:max-w-[25%] lg:max-w-[25%] min-h-[30%] md:min-h-[50%]  p-4 py-8 flex flex-col overflow-auto transition ease-in-out delay-100 duration-[700ms] ${loading ? "border-t-2 border-transparent" : "border-y-2 border-[#ff5f1f] shadow-[inset_0px_5px_12px_-6px_rgb(255,95,31)] bg-neutral-100 dark:bg-zinc-900"} rounded-lg `}>
+                    <div className={`subjects w-full md:max-w-[25%] lg:max-w-[25%] min-h-[30%] md:min-h-[50%]  p-4 py-8 flex flex-col overflow-auto transition ease-in-out delay-100 duration-[700ms] ${loading ? "border-t-2 border-transparent" : "border-y-2 border-[#ff5f1f] shadow-[inset_0px_5px_10px_-8px_rgb(255,95,31)] bg-neutral-100 bg-opacity-70 dark:bg-neutral-800 dark:bg-opacity-35"} rounded-lg `}>
                         {/* {loading && <div>Loading...</div>} */}
                         {!loading && quizzes.length === 0 && <div className='text-center text-stone-800 dark:text-[#e3e3e3]'>No quizzes created yet!</div>}
                         <div className={`relative -top-6 bg-transparent w-full text-center pt-1 h-fit border-b-[1.4px] border-gray-300 dark:border-neutral-600 ${loading || quizzes.length === 0 ? "hidden" : "visible"} `}>Subjects</div>
@@ -723,7 +723,7 @@ const YourQuizes = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.5 }}
                                     layout
-                                    onClick={() => handleSubjectSelect("All")} className={`subject-box text-center rounded-lg flex flex-col border-2 cursor-pointer relative transition-shadow transition-colors ease-in-out duration-200 hover:shadow-[0_4px_6px_-1px_rgba(255,95,31,0.47)] ${selectedSub === "All" ? "bg-[#FF5F1F] text-white border-[#ff5f1f]" : "bg-neutral-50 dark:bg-neutral-700 text-neutral-800 dark:text-[#e3e3e3] dark:border-neutral-600 border-neutral-200"}`}>
+                                    onClick={() => handleSubjectSelect("All")} className={`subject-box text-center rounded-lg flex flex-col border-2 cursor-pointer relative transition-shadow transition-colors ease-in-out duration-200 hover:shadow-[0_4px_6px_-1px_rgba(255,95,31,0.47)] ${selectedSub === "All" ? "bg-[#FF5F1F] text-white border-[#ff5f1f]" : "bg-white dark:bg-neutral-700 text-neutral-800 dark:text-[#e3e3e3] dark:border-neutral-600 border-neutral-200"}`}>
                                     <div className="subject text-sm font-semibold">All</div>
                                     <div className={`count text-xs ${selectedSub === "All" ? "text-gray-200" : "text-gray-400"} `}>{quizzes.length} {quizzes.length > 1 ? "Quizzes" : "Quiz"}</div>
                                 </motion.li>
@@ -736,7 +736,7 @@ const YourQuizes = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.5, delay: 0.2 * (index == 0 ? 0.5 : index) }}
                                     layout
-                                    className={`subject-box text-center rounded-lg flex flex-col border-2 cursor-pointer relative transition-shadow transition-colors ease-in-out duration-200  hover:shadow-[0_4px_6px_-1px_rgba(255,95,31,0.47)] ${selectedSub === subject ? "bg-[#FF5F1F] text-white border-[#ff5f1f]" : "bg-neutral-50 dark:bg-neutral-700 text-neutral-800 dark:text-[#e3e3e3] dark:border-neutral-600 border-neutral-200"} `} >
+                                    className={`subject-box text-center rounded-lg flex flex-col border-2 cursor-pointer relative transition-shadow transition-colors ease-in-out duration-200  hover:shadow-[0_4px_6px_-1px_rgba(255,95,31,0.47)] ${selectedSub === subject ? "bg-[#FF5F1F] text-white border-[#ff5f1f]" : "bg-white dark:bg-neutral-700 text-neutral-800 dark:text-[#e3e3e3] dark:border-neutral-600 border-neutral-200"} `} >
                                     <div className="subject text-sm font-semibold">{subject}</div>
                                     <div className={`count text-xs ${selectedSub == subject ? "text-gray-200" : "text-gray-400"}`}>{quizzes.filter((quiz) => quiz.subject === subject).length} {quizzes.filter((quiz) => quiz.subject === subject).length > 1 ? "Quizzes" : "Quiz"} </div>
                                 </motion.li>
@@ -746,7 +746,7 @@ const YourQuizes = () => {
                         </ul>
                     </div>
                     <AnimatePresence mode='popLayout' >
-                        <div className={`quizes w-full md:w-[80%] min-h-[30%] md:min-h-[50%] p-4 py-8  flex overflow-auto gap-6 flex-wrap justify-around xl:justify-center xl:gap-20 transition ease-in-out delay-100 duration-[700ms] ${loading ? "border-t-2 border-transparent" : "border-y-2 border-[#ff5f1f] shadow-[inset_0px_5px_12px_-6px_rgb(255,95,31)] bg-neutral-100 dark:bg-zinc-900"} rounded-lg`}>
+                        <div className={`quizes w-full md:w-[80%] min-h-[30%] md:min-h-[50%] p-4 py-8  flex overflow-auto gap-6 flex-wrap justify-around xl:justify-center xl:gap-20 transition ease-in-out delay-100 duration-[700ms] ${loading ? "border-t-2 border-transparent" : "border-y-2 border-[#ff5f1f] shadow-[inset_0px_5px_10px_-8px_rgb(255,95,31)] bg-neutral-100 bg-opacity-70 dark:bg-neutral-800 dark:bg-opacity-35"} rounded-lg`}>
                             {quizzes.length === 0 && !loading && <div className='text-stone-800 dark:text-[#e3e3e3]'>No quizzes created yet!</div>}
                             {quizzes
                                 .filter((quiz) => selectedSub === "All" || quiz.subject === selectedSub)
@@ -761,12 +761,12 @@ const YourQuizes = () => {
                                         transition={{ duration: 0.4, delay: 0.1 * (index), type: 'spring', stiffness: 60 }}
                                         layout
                                         style={{ maxHeight: "min(50%, 275px)" }}
-                                        className='quiz-box min-w-[200px] max-w-[15%] min-h-[230px] bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-600 text-neutral-800 dark:text-[#e3e3e3]  rounded-lg flex flex-col border-2 border-neutral-200 bg-opacity-60 dark:bg-opacity-100 cursor-pointer relative transition-shadow  ease-in-out duration-200  hover:shadow-[0_4px_6px_-1px_rgba(255,95,31,0.47)]'
+                                        className='quiz-box min-w-[200px] max-w-[15%] min-h-[230px] bg-neutral-200 dark:bg-neutral-800 dark:border-neutral-600 text-neutral-800 dark:text-[#e3e3e3]  rounded-lg flex flex-col border-2 border-neutral-200 bg-opacity-60 dark:bg-opacity-100 cursor-pointer relative transition-shadow  ease-in-out duration-200  hover:shadow-[0_4px_6px_-1px_rgba(255,95,31,0.47)]'
                                     >
                                         <div className="cover h-3/4 rounded-t-lg">
                                             <img src={null} alt='Quiz cover' className="image w-full h-full border-b-2 border-transparent" />
                                         </div>
-                                        <div className="data text-sm h-1/4 rounded-b-lg flex flex-col dark:bg-neutral-900 bg-neutral-50 p-2">
+                                        <div className="data text-sm h-1/4 rounded-b-lg flex flex-col dark:bg-neutral-700 bg-neutral-50 p-2">
                                             <div className="title flex items-center gap-2">
                                                 <span className='font-bold'>{quiz.title}</span>•<span>{quiz.subject}</span>
                                             </div>
