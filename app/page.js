@@ -7,7 +7,7 @@ import * as motion from "motion/react-client";
 export default function Home() {
   return (
     <>
-      <section id="home" className=" h-[calc(100vh-36px)] min-h-fit max-h-screen flex flex-col justify-center items-center text-center relative w-full  dark:bg-[var(--bg-dark)] dark:text-white  bg-slate-100 p-10 overflow-hidden" >
+      <section id="home" className=" h-[calc(100vh-36px)] min-h-[620px] max-h-screen flex flex-col justify-center items-center text-center relative w-full  dark:bg-[var(--bg-dark)] dark:text-white  bg-slate-100 p-10 overflow-hidden" >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -56,7 +56,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="h-screen min-h-fit bg-[var(--bg-dark)] text-white overflow-hidden py-20 px-10 ">
+      <section className="h-screen min-h-[620px] bg-[var(--bg-dark)] text-white overflow-hidden py-20 px-10 ">
         <div className="flex flex-col-reverse gap-6 lg:flex-row-reverse mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, transform: 'translateX(80px)' }}
@@ -83,7 +83,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="h-screen min-h-fit text-[#FF5F1F] dark:bg-gray-800 bg-slate-100 bg-white overflow-hidden py-20 px-10">
+      <section className="h-screen min-h-[620px] text-[#FF5F1F] dark:bg-gray-800 bg-slate-100 bg-white overflow-hidden py-20 px-10">
         <div className="flex flex-col-reverse gap-6 lg:flex-row mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, transform: 'translateX(-80px)' }}
@@ -109,7 +109,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ≡ƒÜÇ CTA SECTION */}
+      {/* CTA SECTION */}
       <section className="h-2/5 bg-[#FF5F1F] text-white py-20 px-10 text-center">
         <motion.div
           initial={{ opacity: 0, y: 80 }}

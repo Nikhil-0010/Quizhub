@@ -96,7 +96,7 @@ const IndiDashboard = ({ resetDash }) => {
         theme="light"
         toastStyle={{ background: "#FF5F1F" }}
       />
-      <div className='h-[calc(100vh-53px)]  sm:max-h-[calc(100vh-36px)] w-full flex text-neutral-800 bg-white dark:bg-[var(--bg-dark)] dark:text-[#e3e3e3]'>
+      <div className='h-[calc(100vh-53px)] min-h-[620px]  sm:max-h-[calc(100vh-36px)] w-full flex text-neutral-800 bg-white dark:bg-[var(--bg-dark)] dark:text-[#e3e3e3]'>
         {/* main container */}
         <div className='h-full w-full flex flex-col'>
           <div className='h-14 flex justify-between items-center border-b-2 border-zinc-300 dark:border-neutral-600 px-4 '>

@@ -45,15 +45,16 @@ const ResultPage = ({ quizId, userEmail }) => {
             reconnectionDelayMax: 16000, // Maximum delay of 16 seconds
         });
 
-        let attempt = 1;
+        let attempt = 0;
         socket.on('connect_error', () => {
+            attempt++;
             setLoading(true);
             setLoadingMsg("Taking longer than usual to connect, retrying ");
-            if (attempt == 5) {
+            console.info(attempt);
+            if (attempt >= 5) {
+                setLoadingMsg("Error connecting to server, refresh the page to try again.");
                 setLoading(false);
-                setLoadingMsg("Error connecting to server, retrying ");
             }
-            attempt++;
         });
 
         socket.on('connect', () => {
@@ -168,7 +169,7 @@ const ResultPage = ({ quizId, userEmail }) => {
                             </table>
                         </div>
                     )}
-                    {!loading && leaderboard.length === 0 && <p className='text-center'>Connection to server failed 😐</p>}
+                    {!loading && leaderboard.length === 0 && <p className='text-center'>{loadingMsg} 😐</p>}
 
                 </div>
 

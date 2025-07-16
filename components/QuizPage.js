@@ -231,13 +231,13 @@ const QuizAttemptPage = ({ quizData }) => {
                 toastStyle={{ background: "#FF5F1F" }}
             />
             <div className="min-h-screen text-neutral-800 dark:text-[#e3e3e3]  bg-gradient-to-b from-gray-200 to-gray-300  dark:from-zinc-800 dark:to-[var(--bg-dark)] sm:p-6">
-                <div className="bg-white relative dark:bg-neutral-800 border border-zinc-300 dark:border-neutral-700  shadow-xl dark:shadow-neutral-950 rounded-lg max-w-4xl mx-auto p-8">
+                <div className="bg-white min-h-screen xl:min-h-full relative dark:bg-neutral-800 border border-zinc-300 dark:border-neutral-700  shadow-xl dark:shadow-neutral-950 rounded-lg transition-all duration-500 max-w-4xl xl:max-w-6xl mx-auto p-8">
                     <h3 className="text-2xl font-bold text-center text-[#FF5F1F] mb-6">{quizData.title}</h3>
                     {/* Progress Bar */}
-                    <div className="mb-6 sticky top-16 bg-white dark:bg-inherit p-4 rounded-lg dark:shadow-zinc-950 shadow-md border dark:border-neutral-700 border-gray-200 z-10">
+                    <div className="mb-6 sticky top-20 bg-white dark:bg-neutral-700 dark:bg-opacity-50 dark:backdrop-blur-md py-2 px-4 sm:p-4 rounded-lg dark:shadow-zinc-900 shadow-md border dark:border-neutral-600 border-gray-200 z-10">
                         <p className="text-lg font-semibold text-gray-700 dark:text-neutral-400">Progress: {Math.round(progressPercentage)}%</p>
                         <div className="relative w-full h-4 rounded-full overflow-hidden">
-                            <div className="bg-gray-300 dark:bg-neutral-600 w-full h-full rounded-full">
+                            <div className="bg-gray-300 dark:bg-neutral-500 w-full h-full rounded-full">
                                 <div
                                     className="bg-[#FF5F1F] h-full rounded-full"
                                     style={{
@@ -255,7 +255,7 @@ const QuizAttemptPage = ({ quizData }) => {
                     {/* Questions */}
                     <div className="flex flex-col gap-6">
                         {quizData.questions.map((question, index) => (
-                            <div key={index} className="bg-gray-50 dark:bg-neutral-900 dark:border-neutral-700 p-6 rounded-lg shadow-md dark:shadow-zinc-950 border border-gray-200">
+                            <div key={index} className="bg-gray-50 dark:bg-neutral-700 dark:bg-opacity-40 dark:border-neutral-600 p-6 rounded-lg shadow-md dark:shadow-zinc-900 border border-gray-200">
                                 <h4 className="text-lg font-semibold mb-4">
                                     Q{index + 1}: {question.questionText}
                                 </h4>
@@ -275,7 +275,7 @@ const QuizAttemptPage = ({ quizData }) => {
                                                 }
                                                 className="form-radio text-[#FF5F1F] "
                                             />
-                                            <span className="text-gray-800 dark:text-neutral-400">{option.text}</span>
+                                            <span className="text-gray-800 dark:text-neutral-300">{option.text}</span>
                                         </label>
                                     ))}
                                 </div>
