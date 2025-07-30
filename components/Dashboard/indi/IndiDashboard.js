@@ -2,15 +2,15 @@
 import { signOut, useSession } from 'next-auth/react'
 import { redirect, useRouter } from 'next/navigation';
 import React, { useEffect, useState, useRef, Suspense, lazy } from 'react'
-// import CreateQuiz from './CreateQuiz';
-// import YourQuizes from './YourQuizes';
-// import QuizAnalytics from './QuizAnalytics';
 import * as motion from 'motion/react-client';
 import { AnimatePresence } from 'motion/react';
 import Loading from '@/components/Loading';
 import dynamic from "next/dynamic";
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {  ChartNoAxesCombined, LibraryBig, PenLine } from 'lucide-react';
+import Link from 'next/link';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const YourQuizes = dynamic(() => import("./YourQuizes"), {
   loading: () => <Loading />
@@ -18,67 +18,87 @@ const YourQuizes = dynamic(() => import("./YourQuizes"), {
 const QuizAnalytics = dynamic(() => import("./QuizAnalytics"), {
   loading: () => <Loading />
 })
-const CreateQuiz = lazy(() => import('./CreateQuiz'));
+const CreateQuiz = lazy(() => import('./create/CreateQuiz'));
+
+
+
+const SideNavbar = ({ option, handleOption, menuItems }) => {
+  const tabRefs = useRef({}); // Store tab refs
+  const [sideHighlight, setSideHighlight] = useState({ top: 0, height: 0 });
+
+  useEffect(() => {
+    if (tabRefs.current[option]) {
+      const { offsetTop, offsetHeight } = tabRefs.current[option];
+      setSideHighlight({ top: offsetTop, height: offsetHeight });
+    }
+  }, [option]);
+
+
+  return (
+    <div className={`transition-all min-h-screen duration-300 w-20 2xl:w-52 hidden sm:flex flex-col gap-2 bg-white dark:bg-[var(--bg-dark)] h-full border-r border-slate-300 dark:border-slate-600`}>
+      <div className='h-16 relative flex items-center justify-center px-2'>
+        <Link href='/' className='w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-orange-500 to-orange-600'>
+          <span className='text-white font-bold text-2xl'>Q</span>
+        </Link>
+      </div>
+      <ul className='flex flex-col  relative'>
+        {/* Sliding vertical highlight */}
+        <motion.div
+          className="absolute w-full bg-slate-200 dark:bg-slate-800 z-0"
+          animate={{
+            top: sideHighlight.top,
+            height: sideHighlight.height,
+          }}
+          transition={{ type: "spring", stiffness: 250, damping: 30 }}
+        />
+        {menuItems.map((item) => (
+          <li key={item.key} className={`relative z-10 p-2 py-3 flex cursor-pointer items-center justify-center ${option === item.key ? 'text-gray-800 dark:text-gray-300' : 'text-gray-500 dark:text-gray-500 hover:text-gray-800 dark:hover:text-gray-300'}`}
+            onClick={() => handleOption(item.key)}
+            ref={(el) => (tabRefs.current[item.key] = el)}>
+            <button
+              className={`text-center h-full transition-all duration-200 flex items-center gap-2`}
+            >
+              <div className={`flex flex-col items-center justify-center gap-1 overflow-hidden whitespace-nowrap`}>
+                {item.icon && <item.icon className="w-5 h-5" />}
+                <span className='text-xs 2xl:hidden '>
+                  {item.short}
+                </span>
+                <span className='hidden 2xl:inline text-sm '>
+                  {item.label}
+                </span>
+              </div>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+
 
 const IndiDashboard = ({ resetDash }) => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  // const [isActive, setIsActive] = useState({
-  //   any: true,
-  //   menu_CreateQuiz:true,
-  //   menu_YourQuizzes:false,
-  //   menu_Analytics:false,
-  // });
-
   const menuItems = [
-    { key: "CreateQuiz", label: "Create Quiz" },
-    { key: "YourQuizzes", label: "Your Quizzes" },
-    { key: "Analytics", label: "Analytics" },
+    { key: "CreateQuiz", label: "Create Quiz", short: "Create", icon: PenLine },
+    { key: "YourQuizzes", label: "Your Quizzes", short: "Quizzes", icon: LibraryBig },
+    { key: "Analytics", label: "Analytics", short: "Analytics", icon: ChartNoAxesCombined },
   ];
 
   const [option, setOption] = useState("CreateQuiz");
   const [prevIndex, setPrevIndex] = useState(0);
-  const tabRefs = useRef({}); // Store tab refs
   const [tabPositions, setTabPositions] = useState({ left: 0, width: 0, height: 0 });
-
-  useEffect(() => {
-    if (tabRefs.current[option]) {
-      const { offsetLeft, offsetWidth, offsetHeight } = tabRefs.current[option];
-      setTabPositions({ left: offsetLeft, width: offsetWidth, height: offsetHeight });
-    }
-  }, [option]);
-
-  // const handleIsActive = (target) =>{
-  //   isActive.any = true;
-  //   console.log(isActive.any)
-  //   // if(isActive)
-  //   // setIsActive({...isActive, [target]:true});
-  // }
-
-  // const handleOption = (target) =>{
-  //   const[_,option] = target.split("_");
-  //   // console.log(option);
-  //   // set previously active option to false
-  //   // Object.entries(isActive).forEach(([key, value])=>{
-  //   //   if(key!='any' && key!=target  && value===true){
-  //   //     isActive[key] = false;
-  //   //   }
-  //   // })
-  //   // //set clicked option to true
-  //   // setIsActive({...isActive, [target]:true});
-
-  //   setOption(option);
-  // }
-
-  // Get current tab index
-  const currentIndex = menuItems.findIndex((item) => item.key === option);
-  const direction = currentIndex > prevIndex ? 70 : -70; // Forward (-) or Backward (+)
 
   const handleOption = (selectedOption) => {
     setPrevIndex(currentIndex);
     setOption(selectedOption);
   }
+
+  // Get current tab index
+  const currentIndex = menuItems.findIndex((item) => item.key === option);
+  const direction = currentIndex > prevIndex ? 70 : -70; // Forward (-) or Backward (+)
 
   return (
     <>
@@ -96,56 +116,43 @@ const IndiDashboard = ({ resetDash }) => {
         theme="light"
         toastStyle={{ background: "#FF5F1F" }}
       />
-      <div className='h-[calc(100vh-53px)] min-h-[620px]  sm:max-h-[calc(100vh-36px)] w-full flex text-neutral-800 bg-white dark:bg-[var(--bg-dark)] dark:text-[#e3e3e3]'>
-        {/* main container */}
+      {/* <div className='h-[calc(100vh-53px)] min-h-[620px]  sm:max-h-[calc(100vh-36px)] w-full flex text-neutral-800 bg-white dark:bg-[var(--bg-dark)] dark:text-[#e3e3e3]'> */}
+      <div className='h-screen min-h-80 w-full flex text-neutral-800 bg-inherit dark:bg-[var(--bg-dark)] dark:text-[#e3e3e3]'>
+
+        <SideNavbar option={option} handleOption={handleOption} menuItems={menuItems} />
+
         <div className='h-full w-full flex flex-col'>
-          <div className='h-14 flex justify-between items-center border-b-2 border-zinc-300 dark:border-neutral-600 px-4 '>
+          <div className='flex bg-white justify-between items-center border-b border-slate-300 dark:border-slate-600 px-4 py-2 '>
             <div className="title">
-              <h2 className='sm:text-3xl text-xl font-bold font-serif' >Welcome, <span className='text-[#FF4c00]'>{session?.user?.name}</span></h2>
+              <h2 className='text-xl font-bold font-serif' >Welcome, <span className='text-[#FF4c00]'>{session?.user?.name}</span></h2>
             </div>
-            
-            {session?.user?.user_type?.length === 2? (
-              <button onClick={()=>resetDash()} className='bg-[#FF5F1F] hover:bg-[#e64400] w-20 h-9 px-2 rounded-md text-gray-50 '>Switch</button>
-            ):(
-              <button onClick={() => signOut()} className='bg-[#FF5F1F] hover:bg-[#e64400] w-20 h-9 px-2 rounded-md text-gray-50 '>Logout</button>
+            <div className='flex items-center gap-4'>
+              <ThemeToggle />
+            {session?.user?.user_type?.length === 2 ? (
+              <button onClick={() => resetDash()} className='bg-gradient-to-r from-orange-400 to-[#FF5F1F] hover:bg-gradient-to-l h-9 px-4 text-center rounded-md text-gray-50 '>Switch</button>
+            ) : (
+              <button onClick={() => signOut()} className='bg-[#FF5F1F] hover:bg-[#e64400] h-9 px-4 text-center rounded-md text-gray-50 '>Logout</button>
             )}
+            </div>
           </div>
-          <div className="main-section h-[calc(91.3vh-64px)] ">
-            <div className={`menu relative h-12 flex bg-[#FF5F1F] text-white p-3 pb-0 border-b-2 border-zinc-50 dark:border-[var(--bg-dark)] gap-2 sm:gap-4`}>
+          <div className="menu-section will-change-auto p-6 py-8 dark:bg-[var(--bg-dark)] bg-inherit  overflow-auto">
+            <AnimatePresence mode="wait">
               <motion.div
-                className="absolute bottom-0 left-0 bg-white  dark:bg-[var(--bg-dark)] rounded-t-lg shadow-md dark:shadow-neutral-950"
-                animate={{
-                  left: tabPositions.left,
-                  width: tabPositions.width,
-                  height: tabPositions.height,
-                }}
-                transition={{ type: "spring", stiffness: 250, damping: 30 }}
-              />
-              {menuItems.map((tab) => (
-                <div key={tab.key} ref={(el) => (tabRefs.current[tab.key] = el)}><button onClick={() => handleOption(tab.key)} className={`menu_CreateQuiz relative z-10  transition-colors delay-75  ${option == tab.key ? "  text-[#ff5f1f]  " : "text-white"}   rounded-t-lg p-1 px-2 sm:px-3`}>{tab.label}</button></div>
-              ))}
-              {/* <div><button onClick={()=>handleOption("menu_YourQuizzes")} className={`menu_YourQuizzes  border-2  ${isActive.menu_YourQuizzes?"border-[#FF5F1F] bg-white dark:bg-[var(--bg-dark)] text-[#ff5f1f] border-b-[3.3px] border-b-white": "border-transparent"} dark:border-transparent  rounded-t-lg p-1 px-2 sm:px-3`}>Your Quizzes</button></div>
-              <div><button onClick={()=>handleOption("menu_Analytics")} className={`menu_Analytics  border-2  ${isActive.menu_Analytics?"border-[#FF5F1F] bg-white dark:bg-[var(--bg-dark)] text-[#ff5f1f] border-b-[3.3px] border-b-white": "border-transparent"} dark:border-transparent  rounded-t-lg p-1 px-2 sm:px-3`}>Analytics</button></div> */}
-            </div>
-            <div className="menu-section will-change-auto py-6 dark:bg-[var(--bg-dark)] bg-white px-5 sm:px-8 md:px-10 h-[calc(calc(91.3vh-64px)-48px)] overflow-auto">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={option}
-                  initial={{ opacity: 0, x: direction }}
-                  animate={{ opacity: 1, x: 0 }}
-                  // exit={{ opacity: 0}}
-                  transition={{ duration: 0.4 }}
-                  className="w-full h-inherit"
-                >
-                  <Suspense fallback={<Loading />} >
-                    {option === 'CreateQuiz' ?
-                      <CreateQuiz /> : option == 'YourQuizzes' ? <YourQuizes /> : option == 'Analytics' ? <QuizAnalytics /> : "errorrr"
-                    }
-                  </Suspense>
-                  {/* dark:bg-[#212121] */}
-                </motion.div>
-              </AnimatePresence>
-            </div>
+                key={option}
+                initial={{ opacity: 0, x: direction }}
+                animate={{ opacity: 1, x: 0 }}
+                // exit={{ opacity: 0}}
+                transition={{ duration: 0.4 }}
+                className="w-full h-inherit"
+              >
+                <Suspense fallback={<Loading />} >
+                  {option === 'CreateQuiz' ?
+                    <CreateQuiz /> : option == 'YourQuizzes' ? <YourQuizes /> : option == 'Analytics' ? <QuizAnalytics /> : "errorrr"
+                  }
+                </Suspense>
+                {/* dark:bg-[#212121] */}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>

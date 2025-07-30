@@ -3,28 +3,39 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import * as motion from "motion/react-client";
+import { ArrowRight, Sparkles } from "lucide-react";
+import MainLayout from "@/components/MainLayout";
 
 export default function Home() {
   return (
-    <>
-      <section id="home" className=" h-[calc(100vh-36px)] min-h-[620px] max-h-screen flex flex-col justify-center items-center text-center relative w-full  dark:bg-[var(--bg-dark)] dark:text-white  bg-slate-100 p-10 overflow-hidden" >
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="flex flex-col sm:w-3/5"
-        >
-          <h1 className="font-bold text-5xl text-[#FF5F1F] sm:text-7xl">Quizhub</h1>
-          <p className="text-lg dark:text-inherit text-stone-800 md:text-xl 2xl:text-2xl leading-tight">Create, manage and analyse the quizzes.</p>
-          <div className="mt-4 flex gap-3 justify-center">
-            <Link href={'/signup'}>
-              <button className="text-white bg-[#FF4c00] hover:bg-[#e64400] slideFlSlow transition-all duration-300  h-10 px-4 md:h-11 md:px-6 xl:text-lg py-2 rounded-lg">Get Started</button>
-            </Link>
-            {/* <button className="bg-white w-20 h-10 px-4 py-2 rounded-lg">btn2</button> */}
-          </div>
-        </motion.div>
-        <div className="min-h-52 w-52 clip-rightTriangle bg-slate-300 dark:bg-opacity-30 absolute bottom-0 right-0 slide-in-right-fast"></div>
-        <div className="min-h-48 w-48 clip-rightTriangle bg-[#FF5F1F] absolute bottom-0 right-0 slide-in-right-slf"></div>
+    <MainLayout>
+    
+      <section id="home" className=" h-[calc(100vh-36px)] min-h-[620px] max-h-screen flex flex-col justify-center items-center text-center relative w-full  dark:bg-[var(--bg-dark)] dark:text-white  bg-orange-50 p-10 overflow-hidden" >
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-orange-500/20 to-transparent rounded-full blur-3xl"></div>
+        <div className="container mx-auto px-4 py-20 lg:py-32 relative">
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="text-center max-w-4xl mx-auto flex flex-col items-center  gap-6"
+          >
+              <div className="inline-flex items-center rounded-full text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-gradient-to-r from-orange-500 to-orange-600 text-white border-0 px-4 py-2" ><Sparkles className="w-4 h-4 mr-2"/> Introducing QuizHub v2.0 - Now with AI</div>
+              <h1 className="font-bold text-5xl lg:text-7xl text-[#FF5F1F] ">
+                <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Quizhub</span>
+              </h1>
+              <p className="text-xl lg:text-2xl text-slate-600 dark:text-slate-400 ">Create, manage and analyse quizzes with the power of AI</p>
+              <p className="text-lg text-slate-500 dark:text-slate-500 max-w-2xl mx-auto">Build engaging quizzes in seconds using AI generation, smart file imports, or traditional manual creation. Perfect for educators, trainers, and content creators.</p>
+              <div className="mt-4 flex gap-3 justify-center">
+                <Link href={'/signup'} className="text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 slideFlSlow transition-all duration-300  h-10 px-4 md:h-11 md:px-8 xl:text-lg py-2 md:py-6 rounded-md flex items-center gap-4 ">
+                  Get Started Free <ArrowRight className="w-5 h-5" />
+                </Link>
+                {/* <button className="bg-white w-20 h-10 px-4 py-2 rounded-lg">btn2</button> */}
+            </div>
+          </motion.div>
+          {/* <div className="min-h-52 w-52 clip-rightTriangle bg-slate-300 dark:bg-opacity-30 absolute bottom-0 right-0 slide-in-right-fast"></div> */}
+          {/* <div className="min-h-48 w-48 clip-rightTriangle bg-[#FF5F1F] absolute bottom-0 right-0 slide-in-right-slf"></div> */}
+        </div>
       </section>
 
       {/* Γ£à FEATURES SECTION */}
@@ -68,16 +79,16 @@ export default function Home() {
               after:rounded-b-sm after:content-[' '] after:w-full after:absolute after:left-0 after:bottom-[-1px] after:h-[3px] after:bg-gradient-to-r after:from-[#FF5F1F] after:to-[#ffaf8f]
             ">
               <span className="text-[#FF5F1F]">F</span>or the institute
-              </h1>
+            </h1>
             <p className="md:text-lg">Manage quizzes for large teams or groups.
               <br />
               Generate aggregated analytics to understand group performance and identify areas for improvement.</p>
           </motion.div>
           <div className="flex relative items-center h-1/2 lg:h-full justify-center lg:w-2/5 2xl:w-3/5 md:mt-10">
-          <div className="relative w-full max-w-[480px] lg:max-w-[640px] aspect-[16/10]">
+            <div className="relative w-full max-w-[480px] lg:max-w-[640px] aspect-[16/10]">
               <div className="w-full rounded-xl rotate-6 shadow-md top-2 left-4 z-0 max-w-[640px] max-h-[400px] absolute bg-white h-full" ></div>
               <div className="w-full rounded-xl -rotate-[5deg] shadow-md z-0 top-2 left-2 max-w-[640px] max-h-[400px] absolute bg-white h-full" ></div>
-            <Image src={"/institute-cmp.png"} fill alt="insitute image" className="rounded-xl shadow-xl  z-10 relative" />
+              <Image src={"/institute-cmp.png"} fill alt="insitute image" className="rounded-xl shadow-xl  z-10 relative" />
             </div>
           </div>
         </div>
@@ -100,10 +111,10 @@ export default function Home() {
             </p>
           </motion.div>
           <div className="flex relative items-center h-1/2 lg:h-full justify-center lg:w-2/5 2xl:w-3/5 md:mt-10">
-          <div className="relative w-full max-w-[480px] lg:max-w-[640px] aspect-[16/10]">
+            <div className="relative w-full max-w-[480px] lg:max-w-[640px] aspect-[16/10]">
               <div className="w-full rounded-xl rotate-6 shadow-md top-2 left-4 z-0 max-w-[640px] max-h-[400px] absolute bg-white h-full" ></div>
               <div className="w-full rounded-xl -rotate-[5deg] shadow-md z-0 top-2 left-2 max-w-[640px] max-h-[400px] absolute bg-white h-full" ></div>
-            <Image src={"/individual-cmp.png"} fill alt="insitute image" className="rounded-xl shadow-xl  z-10 relative" />
+              <Image src={"/individual-cmp.png"} fill alt="insitute image" className="rounded-xl shadow-xl  z-10 relative" />
             </div>
           </div>
         </div>
@@ -131,6 +142,6 @@ export default function Home() {
           </Link>
         </motion.div>
       </section>
-    </>
+    </MainLayout>
   );
 }

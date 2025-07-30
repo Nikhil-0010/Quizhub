@@ -13,11 +13,47 @@ const optionSchema = new Schema({
     },
 });
 
-const questionSchema = new Schema({
-    questionText: {
+const segmentSchema = new Schema({
+        type: {
+        type: String,
+        enum: ['text', 'code'],
+        required: true,
+    },
+    content: {
         type: String,
         required: true,
-        trim: true,
+    },
+    lang: {
+        type: String,
+        required: function () {
+            return this.type === 'code'; // lang is required only for code questions
+        },
+    }
+}, { _id: false });
+
+const questionTextSchema = new Schema({
+    segments: {
+        type: [segmentSchema],
+        required: true,
+        validate: {
+            validator: function (value) {
+                return value.length > 0; // Ensure there is at least one segment
+            },
+            message: 'Question text must have at least one segment.',
+        }
+    },
+}, { _id: false });
+
+const questionSchema = new Schema({
+    questionText: {
+        type: questionTextSchema,
+        required: true,
+        validate: {
+            validator: function (value) {
+                return value.segments.length > 0; // Ensure there is at least one segment
+            },
+            message: 'Question text must have at least one segment.',
+        },
     },
     options: {
         type: [optionSchema],
@@ -32,8 +68,15 @@ const questionSchema = new Schema({
     marks: {
         type: Number,
         required: true,
-        min: 1, // Ensures marks are at least 1
-        message: 'Each question must have at least 1 mark.',
+        validate: {
+        validator: (val) => val >= 1,
+        message: 'Each question must have minimum 1 mark.',
+        }
+    },
+    explanation: {
+        type: String,
+        trim: true,
+        default: '',
     },
 });
 
@@ -87,7 +130,7 @@ const QuizSchema = new Schema({
     totalMarks: {
         type: Number,
         default: function () {
-            return this.questions.reduce((total, question) => total + question.marks, 0);
+            return (this.questions || []).reduce((total, question) => total + question.marks, 0);
         },
     },
     attempts: [{

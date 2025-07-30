@@ -1,5 +1,5 @@
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import MainNavbar from "@/components/MainNavbar";
 import SessionWrapper from "@/components/SessionWrapper";
 import { ThemeProvider } from "next-themes";
 import { Suspense } from "react";
@@ -34,8 +34,8 @@ export default function RootLayout({ children }) {
                 theme="light"
                 style={{zIndex:100}}
               />
-          <div className="  2xl:border-x-2 border-gray-300 dark:border-neutral-700">
-          <Navbar />
+          <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800  ">
+          {/* <MainNavbar /> */}
       {/* <Suspense fallback={<Loading />}> */}
         {children}
       {/* </Suspense> */}

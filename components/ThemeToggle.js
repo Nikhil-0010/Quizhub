@@ -66,16 +66,16 @@ export default function ThemeToggle() {
       {/* Animated Theme Toggle Switch */}
       <button
         onClick={toggleTheme}
-        className="relative w-16 h-8 flex items-center rounded-full border dark:border-neutral-600 bg-gray-300 dark:bg-gray-700 p-1 transition-all"
+        className="relative w-12 h-6 flex items-center rounded-full border dark:border-neutral-600 bg-orange-50 dark:bg-gray-700 p-1 transition-all"
       >
         {/* Sliding Icon */}
         <motion.div
-          className="w-6 h-6 bg-white dark:bg-gray-900 rounded-full flex items-center justify-center shadow-md"
-          initial={{ x: (theme === "dark") || prefersDark ? 32 : 0 }}
-          animate={{ x: (theme === "dark") || prefersDark ? 32 : 0 }}
+          className="w-4 h-4 bg-white dark:bg-gray-900 rounded-full flex items-center justify-center shadow-md"
+          initial={{ x: (theme === "dark") || prefersDark ? 24 : 0 }}
+          animate={{ x: (theme === "dark") || prefersDark ? 24 : 0 }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
         >
-          {(theme === "light") || (theme==="system"?!prefersDark:null) ? <Sun size={16} className="text-yellow-500" /> : <Moon size={16} className="text-blue-400" />}
+          {(theme === "light") || (theme==="system"?!prefersDark:null) ? <Sun size={12} className="text-yellow-500" /> : <Moon size={12} className="text-blue-400" />}
         </motion.div>
       </button>
       {/* <Component {...pageProps} /> */}
